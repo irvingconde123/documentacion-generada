@@ -2,9 +2,9 @@
 
 ## Estado actual
 
-- Implementado: carpeta de trabajo, contratos compartidos, contratos de sync batch/outbox/idempotencia/cifrado/sesión híbrida/DTOs operativos, API base, módulo API `sync/offline`, API pública `site` y páginas por slug, persistencia PostgreSQL/Neon para el espejo CMS usando `DATABASE_URL`, rama Neon `production_ecosistemaNegocio`, CMS con login local, selector de negocio, shell lateral izquierda desplegable con iconos y scroll responsive, edición visual de bloques con alta/baja/reordenamiento, editor de diseño separado, SEO básico por página, páginas/menú/vista espejo conectados a API, presets de laboratorio, reportes de auditoría simulados, alertas temporales, landing renderizando menú, páginas, hero, servicios, texto, galería/imágenes, métricas, organismos, misión, acreditaciones, CTA, footer, contacto y metadata SEO desde API, y sistema híbrido web inicial con Vite/Ionic React, Capacitor/Electron base y modo offline forzado visible.
-- En progreso: integración de auth/permisos reales, refinamiento UX del CMS y sistema híbrido, adopción runtime de contratos nuevos por API/sistema híbrido, plan transversal de pruebas de integracion y versionado draft/publish.
-- Pendiente: SMTP real con adjunto XLSX, publicación versionada draft/publish, módulo formal de Media/upload, cache incremental, query executor contextual, outbox real, idempotencia runtime, persistencia local y empaquetado nativo.
+- Implementado: carpeta de trabajo, contratos compartidos, contratos de sync batch/outbox/idempotencia/cifrado/sesión híbrida/DTOs operativos, API base, módulo API `sync/offline`, API pública `site` y páginas por slug, persistencia PostgreSQL/Neon para el espejo CMS usando `DATABASE_URL`, rama Neon `production_ecosistemaNegocio`, CMS con login local, selector de negocio, shell lateral izquierda desplegable con iconos y scroll responsive, edición visual de bloques con alta/baja/reordenamiento, editor de diseño separado, SEO básico por página, páginas/menú/vista espejo conectados a API, presets de laboratorio, reportes de auditoría simulados, alertas temporales, Mi cuenta editable, gestión local de usuarios por correo único e inmutable, contraseña temporal en modo prueba local, biblioteca Media por URL, CMS leyendo el mismo espejo `/site` que la landing, landing renderizando menú, páginas, hero, servicios, texto, galería/imágenes, métricas, organismos, misión, acreditaciones, CTA, footer, contacto y metadata SEO desde API, y sistema híbrido web inicial con Vite/Ionic React, Capacitor/Electron base y modo offline forzado visible.
+- En progreso: integración de auth/permisos reales, SMTP/API real para usuarios, refinamiento UX del CMS y sistema híbrido, adopción runtime de contratos nuevos por API/sistema híbrido, plan transversal de pruebas de integracion y versionado draft/publish.
+- Pendiente: SMTP real con adjunto XLSX, publicación versionada draft/publish, upload real de Media y persistencia API de biblioteca, cache incremental, query executor contextual, outbox real, idempotencia runtime, persistencia local y empaquetado nativo.
 - Bloqueado: sync real y publicación productiva quedan bloqueados hasta cerrar contratos de cifrado, auth/permisos runtime, outbox/idempotencia y validación de payloads.
 
 ## Agentes activos
@@ -12,7 +12,7 @@
 | Agente | Proyecto | Estado | Meta inmediata |
 |---|---|---|---|
 | Agente 1 - API y core | `repos/api` | Activo | Cerrar auth/permisos reales, validación runtime y preparar sync/outbox |
-| Agente 2 - CMS | `repos/cms` | Activo | Formalizar Media/SEO, permisos Admin/Editor y publicación versionada |
+| Agente 2 - CMS | `repos/cms` | Activo | Conectar auth/permisos reales, upload Media y publicación versionada |
 | Agente 3 - Landing | `repos/landing` | Activo | Preparar cache incremental y manejo formal de assets |
 | Agente 4 - Sistema hibrido | `repos/sistema-hibrido` | Activo | Conectar contratos compartidos, outbox real y persistencia local |
 | Agente 5 - Contratos y coordinacion | `repos/shared-contracts`, `coordinacion` | Activo | Registrar contratos, estado real, riesgos y siguientes metas |
@@ -20,7 +20,7 @@
 ## Plan de trabajo inmediato
 
 1. Agente 1 agrega auth/permisos, validación runtime de payloads y formaliza cifrado.
-2. Agente 2 completa Media, permisos visibles por rol y separación real de borrador/publicación.
+2. Agente 2 conecta usuarios/media a API real, permisos visibles por rol y separación real de borrador/publicación.
 3. Agente 1 configura SMTP real y generacion XLSX para auditoria.
 4. Agente 3 agrega cache incremental y SEO desde CMS.
 5. Agente 5 marca contratos aceptados cuando API/CMS/Landing/Sistema híbrido los validen.
@@ -36,7 +36,7 @@
 - UX/UI: todo cambio frontend requiere auditoría de diseño y repetición de ciclo si hay hallazgos bloqueantes.
 - Smoke Neon: publicar sitio de laboratorio por API, reiniciar API y verificar que marca, menú y bloques siguen persistidos.
 - Responsive CMS/Landing: auditoría UX/UI en `1366x768`, `1024x640` y `375x667`, con scroll forzado y sin overflow horizontal bloqueante.
-- Auditoría UX/UI 2026-07-15: landing validada en desktop/tablet/mobile sin overflow horizontal ni elementos fuera de viewport; capturas en `logs/auditoria-final-ux`. CMS pasó build/lint y revisión de código, pero la captura autenticada por navegador quedó bloqueada por timeout operativo del dev server en esta corrida.
+- Auditoría UX/UI 2026-07-15: landing validada en desktop/tablet/mobile sin overflow horizontal ni elementos fuera de viewport; capturas en `logs/auditoria-final-ux`. CMS validado por navegador en `1366x768` y `390x844`, sin overflow horizontal móvil, con capturas en `logs/screenshots/cms-account-users-media`.
 
 ## Decisiones aplicadas
 
@@ -46,6 +46,7 @@
 - El plan de pruebas de integracion vive en `coordinacion/plan-pruebas-integracion.md` y bloquea release cuando hay fallos criticos de cifrado, contratos, penetracion o inyeccion SQL.
 - API usa Neon/PostgreSQL para conservar el espejo público CMS; conserva fallback en memoria/demo si no hay `DATABASE_OPERATIONAL_URL`.
 - CMS y landing tienen fallback local para compilar sin API encendida.
+- CMS carga inicialmente desde `GET /v1/public/:tenantSlug/site`; con API arriba, Contenido, Paginas/menu y Vista espejo parten de la misma verdad que la landing.
 - `sistema-hibrido` queda preparado con modo offline forzado, sin robar foco al primer entregable.
 - El CMS ya no concentra contenido, diseño y auditoría en una sola vista: usa shell lateral izquierda y navegación por secciones.
 - Los avisos de guardado/publicación desaparecen automáticamente y distinguen publicación confirmada de guardado local sin confirmación de API.
@@ -66,8 +67,8 @@
 - Ocultar o mover a modo avanzado los datos técnicos como `slug`, ids internos y JSON.
 - Definir tokens visuales globales para primario, éxito, advertencia, error, bordes y texto secundario.
 - Agregar estados vacíos/error en selección de negocio y flujos de auditoría.
-- Reemplazar placeholders de `Mi cuenta`, `Usuarios` y `Media` por módulos reales. SEO básico ya existe; faltan validaciones avanzadas y previsualización social.
-- Convertir imágenes por URL en un módulo Media real con carga, biblioteca, texto alternativo y reutilización.
+- Conectar `Mi cuenta`, `Usuarios` y `Media` a API/auth/storage reales. Hoy funcionan en estado local CMS.
+- Convertir Media por URL en carga real de archivos con selector reutilizable en hero, galería, SEO y perfil.
 - Mejorar todavía más el editor espejo para modificar columnas/posiciones finas del layout sin depender de convenciones en `settings`.
 
 ## Bloqueos técnicos antes de integración real

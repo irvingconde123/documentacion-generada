@@ -42,7 +42,7 @@ cd repos/cms
 npm run dev -- -p 4200
 
 cd repos/landing
-npm run dev -- -p 3002
+npm run dev -- -p 3100
 ```
 
 Puertos:
@@ -50,7 +50,7 @@ Puertos:
 - API: `http://localhost:3000/v1`
 - Swagger: `http://localhost:3000/docs`
 - CMS: `http://localhost:4200`
-- Landing: `http://localhost:3002`
+- Landing: `http://localhost:3100`
 
 ## Usuario local CMS
 
@@ -61,12 +61,13 @@ Puertos:
 
 1. Entrar al CMS.
 2. Editar paginas, menu, estilos y bloques.
-3. Agregar/reordenar/eliminar secciones.
-4. Publicar sitio.
-5. Reiniciar API.
-6. Confirmar que `GET /v1/public/demo/site` conserva marca, menu, paginas y bloques.
-7. Abrir landing y confirmar que renderiza el contenido publicado.
-8. Confirmar metadata SEO en landing: title, description y `og:image` deben
+3. Gestionar Mi cuenta, usuarios y media desde sus secciones.
+4. Agregar/reordenar/eliminar secciones.
+5. Publicar sitio.
+6. Reiniciar API.
+7. Confirmar que `GET /v1/public/demo/site` conserva marca, menu, paginas y bloques.
+8. Abrir landing y confirmar que renderiza el contenido publicado.
+9. Confirmar metadata SEO en landing: title, description y `og:image` deben
    salir desde `page.seo` cuando exista.
 
 Fixture de prueba recomendado:
@@ -122,8 +123,9 @@ Para frontend, tomar capturas al menos en:
 ## Pendientes inmediatos
 
 1. Completar publicacion versionada: borrador vs publicado.
-2. Crear modulo Media real: biblioteca, URLs, alt text y reutilizacion.
-3. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime.
-4. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
+2. Conectar Mi cuenta/Usuarios/Media a API real, SMTP y storage.
+3. Agregar selector de Media dentro de hero, galeria, SEO y foto de perfil.
+4. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime.
+5. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
    en `settings`.
-5. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
+6. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
