@@ -2,9 +2,9 @@
 
 ## Estado actual
 
-- Implementado: carpeta de trabajo, contratos compartidos, contratos de sync batch/outbox/idempotencia/cifrado/sesión híbrida/DTOs operativos, API base, módulo API `sync/offline`, API pública `site` y páginas por slug, persistencia PostgreSQL/Neon para el espejo CMS usando `DATABASE_URL`, rama Neon `production_ecosistemaNegocio`, CMS con login local, selector de negocio, shell lateral izquierda desplegable con iconos y scroll responsive, edición visual de bloques con alta/baja/reordenamiento, editor de diseño separado, páginas/menú/vista espejo conectados a API, presets de laboratorio, reportes de auditoría simulados, alertas temporales, landing renderizando menú, páginas, hero, servicios, texto, galería/imágenes, métricas, organismos, misión, acreditaciones, CTA, footer y contacto desde API, y sistema híbrido web inicial con Vite/Ionic React, Capacitor/Electron base y modo offline forzado visible.
+- Implementado: carpeta de trabajo, contratos compartidos, contratos de sync batch/outbox/idempotencia/cifrado/sesión híbrida/DTOs operativos, API base, módulo API `sync/offline`, API pública `site` y páginas por slug, persistencia PostgreSQL/Neon para el espejo CMS usando `DATABASE_URL`, rama Neon `production_ecosistemaNegocio`, CMS con login local, selector de negocio, shell lateral izquierda desplegable con iconos y scroll responsive, edición visual de bloques con alta/baja/reordenamiento, editor de diseño separado, SEO básico por página, páginas/menú/vista espejo conectados a API, presets de laboratorio, reportes de auditoría simulados, alertas temporales, landing renderizando menú, páginas, hero, servicios, texto, galería/imágenes, métricas, organismos, misión, acreditaciones, CTA, footer, contacto y metadata SEO desde API, y sistema híbrido web inicial con Vite/Ionic React, Capacitor/Electron base y modo offline forzado visible.
 - En progreso: integración de auth/permisos reales, refinamiento UX del CMS y sistema híbrido, adopción runtime de contratos nuevos por API/sistema híbrido, plan transversal de pruebas de integracion y versionado draft/publish.
-- Pendiente: SMTP real con adjunto XLSX, publicación versionada draft/publish, módulo formal de Media/upload, SEO administrable, cache incremental, query executor contextual, outbox real, idempotencia runtime, persistencia local y empaquetado nativo.
+- Pendiente: SMTP real con adjunto XLSX, publicación versionada draft/publish, módulo formal de Media/upload, cache incremental, query executor contextual, outbox real, idempotencia runtime, persistencia local y empaquetado nativo.
 - Bloqueado: sync real y publicación productiva quedan bloqueados hasta cerrar contratos de cifrado, auth/permisos runtime, outbox/idempotencia y validación de payloads.
 
 ## Agentes activos
@@ -13,14 +13,14 @@
 |---|---|---|---|
 | Agente 1 - API y core | `repos/api` | Activo | Cerrar auth/permisos reales, validación runtime y preparar sync/outbox |
 | Agente 2 - CMS | `repos/cms` | Activo | Formalizar Media/SEO, permisos Admin/Editor y publicación versionada |
-| Agente 3 - Landing | `repos/landing` | Activo | Preparar cache incremental, SEO desde CMS y manejo formal de assets |
+| Agente 3 - Landing | `repos/landing` | Activo | Preparar cache incremental y manejo formal de assets |
 | Agente 4 - Sistema hibrido | `repos/sistema-hibrido` | Activo | Conectar contratos compartidos, outbox real y persistencia local |
 | Agente 5 - Contratos y coordinacion | `repos/shared-contracts`, `coordinacion` | Activo | Registrar contratos, estado real, riesgos y siguientes metas |
 
 ## Plan de trabajo inmediato
 
 1. Agente 1 agrega auth/permisos, validación runtime de payloads y formaliza cifrado.
-2. Agente 2 completa Media/SEO, permisos visibles por rol y separación real de borrador/publicación.
+2. Agente 2 completa Media, permisos visibles por rol y separación real de borrador/publicación.
 3. Agente 1 configura SMTP real y generacion XLSX para auditoria.
 4. Agente 3 agrega cache incremental y SEO desde CMS.
 5. Agente 5 marca contratos aceptados cuando API/CMS/Landing/Sistema híbrido los validen.
@@ -57,6 +57,7 @@
 - Neon tiene rama separada `production_ecosistemaNegocio` para este ecosistema; no se debe mezclar con Adastra. El 2026-07-15 se recreó/confirmó la rama en la cuenta Neon actualmente conectada por CLI.
 - API prefiere `DATABASE_URL`; `DATABASE_OPERATIONAL_URL` queda solo como compatibilidad temporal.
 - La landing de laboratorio ya incorpora la estructura tomada de `Captura_*_Landing`: hero oscuro con overlays, métricas, organismos, servicios, misión, acreditaciones, CTA regulatorio, contacto y footer.
+- SEO básico por página ya se transporta en `page.seo` y la landing lo usa en `generateMetadata`.
 
 ## Pendientes de alcance CMS
 
@@ -65,7 +66,7 @@
 - Ocultar o mover a modo avanzado los datos técnicos como `slug`, ids internos y JSON.
 - Definir tokens visuales globales para primario, éxito, advertencia, error, bordes y texto secundario.
 - Agregar estados vacíos/error en selección de negocio y flujos de auditoría.
-- Reemplazar placeholders de `Mi cuenta`, `Usuarios`, `Media` y `SEO` por módulos reales.
+- Reemplazar placeholders de `Mi cuenta`, `Usuarios` y `Media` por módulos reales. SEO básico ya existe; faltan validaciones avanzadas y previsualización social.
 - Convertir imágenes por URL en un módulo Media real con carga, biblioteca, texto alternativo y reutilización.
 - Mejorar todavía más el editor espejo para modificar columnas/posiciones finas del layout sin depender de convenciones en `settings`.
 

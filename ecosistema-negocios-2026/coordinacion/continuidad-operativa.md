@@ -39,7 +39,7 @@ $env:DATABASE_URL="<neon-postgres-url>"
 npm run start:prod
 
 cd repos/cms
-npm run dev -- -p 3001
+npm run dev -- -p 4200
 
 cd repos/landing
 npm run dev -- -p 3002
@@ -49,7 +49,7 @@ Puertos:
 
 - API: `http://localhost:3000/v1`
 - Swagger: `http://localhost:3000/docs`
-- CMS: `http://localhost:3001`
+- CMS: `http://localhost:4200`
 - Landing: `http://localhost:3002`
 
 ## Usuario local CMS
@@ -66,6 +66,8 @@ Puertos:
 5. Reiniciar API.
 6. Confirmar que `GET /v1/public/demo/site` conserva marca, menu, paginas y bloques.
 7. Abrir landing y confirmar que renderiza el contenido publicado.
+8. Confirmar metadata SEO en landing: title, description y `og:image` deben
+   salir desde `page.seo` cuando exista.
 
 Fixture de prueba recomendado:
 
@@ -121,8 +123,7 @@ Para frontend, tomar capturas al menos en:
 
 1. Completar publicacion versionada: borrador vs publicado.
 2. Crear modulo Media real: biblioteca, URLs, alt text y reutilizacion.
-3. Crear SEO administrable por pagina.
-4. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime.
-5. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
+3. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime.
+4. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
    en `settings`.
-6. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
+5. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
