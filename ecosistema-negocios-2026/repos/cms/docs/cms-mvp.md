@@ -26,8 +26,10 @@
 - El CMS arranca leyendo `GET /v1/public/:tenantSlug/site`, el mismo espejo que consume la landing, para evitar editar una copia distinta.
 - El formulario de Pagina principal sincroniza titulo/descripcion con el bloque Hero visible al publicar.
 - Los bloques `metricStrip` y `logoStrip` ya no muestran campos de titulo/descripcion como editables visibles porque la landing solo renderiza sus listas.
-- Vista espejo resumida ajustada para no prometer titulos invisibles en metricas y organismos.
+- Vista espejo con renderer visual tipo landing: hero, menu, servicios, metricas, organismos, mision, acreditaciones, CTA y footer en el mismo orden publicado.
+- Vista espejo responsive: en movil aparece antes del formulario de edicion; en escritorio usa un marco escalado con scroll interno como respaldo para evitar recortes/overflow global.
 - Menu de navegacion permite enlaces a paginas internas, URL externa y PDF/archivo descargable.
+- El menu de navegacion permite elegir un documento activo desde Media para enlaces PDF/archivo descargable; al elegirlo toma el nombre del archivo y publica `linkType: "download"`.
 - Reordenamiento de secciones publica el orden real que la landing renderiza.
 
 ## Proximo bloque
@@ -37,7 +39,7 @@
 - Configurar envio SMTP real y adjunto XLSX.
 - Separar borrador de publicacion real.
 - Formalizar upload real de Media y persistencia API para biblioteca compartida entre entornos.
-- Conectar selector de Media dentro de hero, galeria, SEO, foto de perfil y menu PDF descargable.
+- Conectar selector de Media dentro de hero, galeria, SEO y foto de perfil.
 - Validar imagenes SEO desde el modulo Media cuando exista biblioteca formal.
-- Convertir Vista espejo resumida en render 1:1 reutilizando el renderer real de landing o un paquete compartido.
+- Extraer el renderer de landing a paquete compartido para que Vista espejo y landing usen exactamente el mismo codigo visual.
 - Revisar claims comerciales/regulatorios antes de publicar sitios reales: precision, volumen anual, acreditaciones y aceptacion por autoridades deben tener evidencia o texto menos absoluto.

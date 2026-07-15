@@ -64,11 +64,13 @@ Puertos:
 3. Gestionar Mi cuenta, usuarios y media desde sus secciones.
 4. Agregar/reordenar/eliminar secciones.
 5. Agregar al menu una pagina interna, una URL externa y un PDF/archivo descargable.
-6. Publicar sitio.
-7. Reiniciar API.
-8. Confirmar que `GET /v1/public/demo/site` conserva marca, menu, paginas, bloques, `linkType` y orden.
-9. Abrir landing y confirmar que renderiza el contenido publicado.
-10. Confirmar metadata SEO en landing: title, description y `og:image` deben
+6. Para PDF/archivo descargable, crear primero un documento en Media y elegirlo desde
+   "Páginas y menú" con "Elegir archivo guardado".
+7. Publicar sitio.
+8. Reiniciar API.
+9. Confirmar que `GET /v1/public/demo/site` conserva marca, menu, paginas, bloques, `linkType` y orden.
+10. Abrir landing y confirmar que renderiza el contenido publicado.
+11. Confirmar metadata SEO en landing: title, description y `og:image` deben
    salir desde `page.seo` cuando exista.
 
 Fixture de prueba recomendado:
@@ -125,9 +127,16 @@ Para frontend, tomar capturas al menos en:
 
 1. Completar publicacion versionada: borrador vs publicado.
 2. Conectar Mi cuenta/Usuarios/Media a API real, SMTP y storage.
-3. Agregar selector de Media dentro de hero, galeria, SEO, foto de perfil y menu PDF.
+3. Agregar selector de Media dentro de hero, galeria, SEO y foto de perfil.
 4. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime.
-5. Convertir Vista espejo en render 1:1 con landing o renombrarla como vista resumida.
+5. Extraer renderer compartido para que Vista espejo y landing usen exactamente el mismo codigo.
 6. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
    en `settings`.
 7. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
+
+## Evidencia reciente
+
+- Vista espejo CMS: `logs/screenshots/cms-mirror-1to1`.
+- Media/PDF en menu y landing: `logs/screenshots/cms-media-menu`.
+- Validacion ejecutada el 2026-07-15: `repos/cms npm run build`; Playwright temporal
+  contra CMS `4200`, API `3000` y landing `3100`.
