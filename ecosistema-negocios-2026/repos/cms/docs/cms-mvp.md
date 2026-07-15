@@ -25,6 +25,10 @@
 - Modulo Media: biblioteca local por URL con titulo, texto alternativo, tipo, estado, etiquetas, edicion y eliminacion.
 - El CMS arranca leyendo `GET /v1/public/:tenantSlug/site`, el mismo espejo que consume la landing, para evitar editar una copia distinta.
 - El formulario de Pagina principal sincroniza titulo/descripcion con el bloque Hero visible al publicar.
+- Los bloques `metricStrip` y `logoStrip` ya no muestran campos de titulo/descripcion como editables visibles porque la landing solo renderiza sus listas.
+- Vista espejo resumida ajustada para no prometer titulos invisibles en metricas y organismos.
+- Menu de navegacion permite enlaces a paginas internas, URL externa y PDF/archivo descargable.
+- Reordenamiento de secciones publica el orden real que la landing renderiza.
 
 ## Proximo bloque
 
@@ -33,5 +37,7 @@
 - Configurar envio SMTP real y adjunto XLSX.
 - Separar borrador de publicacion real.
 - Formalizar upload real de Media y persistencia API para biblioteca compartida entre entornos.
-- Conectar selector de Media dentro de hero, galeria, SEO y foto de perfil.
+- Conectar selector de Media dentro de hero, galeria, SEO, foto de perfil y menu PDF descargable.
 - Validar imagenes SEO desde el modulo Media cuando exista biblioteca formal.
+- Convertir Vista espejo resumida en render 1:1 reutilizando el renderer real de landing o un paquete compartido.
+- Revisar claims comerciales/regulatorios antes de publicar sitios reales: precision, volumen anual, acreditaciones y aceptacion por autoridades deben tener evidencia o texto menos absoluto.

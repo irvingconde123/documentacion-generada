@@ -2,7 +2,7 @@
 
 ## Estado actual
 
-- Implementado: carpeta de trabajo, contratos compartidos, contratos de sync batch/outbox/idempotencia/cifrado/sesión híbrida/DTOs operativos, API base, módulo API `sync/offline`, API pública `site` y páginas por slug, persistencia PostgreSQL/Neon para el espejo CMS usando `DATABASE_URL`, rama Neon `production_ecosistemaNegocio`, CMS con login local, selector de negocio, shell lateral izquierda desplegable con iconos y scroll responsive, edición visual de bloques con alta/baja/reordenamiento, editor de diseño separado, SEO básico por página, páginas/menú/vista espejo conectados a API, presets de laboratorio, reportes de auditoría simulados, alertas temporales, Mi cuenta editable, gestión local de usuarios por correo único e inmutable, contraseña temporal en modo prueba local, biblioteca Media por URL, CMS leyendo el mismo espejo `/site` que la landing, landing renderizando menú, páginas, hero, servicios, texto, galería/imágenes, métricas, organismos, misión, acreditaciones, CTA, footer, contacto y metadata SEO desde API, y sistema híbrido web inicial con Vite/Ionic React, Capacitor/Electron base y modo offline forzado visible.
+- Implementado: carpeta de trabajo, contratos compartidos, contratos de sync batch/outbox/idempotencia/cifrado/sesión híbrida/DTOs operativos, API base, módulo API `sync/offline`, API pública `site` y páginas por slug, persistencia PostgreSQL/Neon para el espejo CMS usando `DATABASE_URL`, rama Neon `production_ecosistemaNegocio`, CMS con login local, selector de negocio, shell lateral izquierda desplegable con iconos y scroll responsive, edición visual de bloques con alta/baja/reordenamiento, editor de diseño separado, SEO básico por página, páginas/menú/vista espejo conectados a API, menú con páginas internas/URL externa/PDF descargable, presets de laboratorio, reportes de auditoría simulados, alertas temporales, Mi cuenta editable, gestión local de usuarios por correo único e inmutable, contraseña temporal en modo prueba local, biblioteca Media por URL, CMS leyendo el mismo espejo `/site` que la landing, landing renderizando menú, páginas, hero, servicios, texto, galería/imágenes, métricas, organismos, misión, acreditaciones, CTA, footer, contacto y metadata SEO desde API, orden de secciones publicado por CMS, y sistema híbrido web inicial con Vite/Ionic React, Capacitor/Electron base y modo offline forzado visible.
 - En progreso: integración de auth/permisos reales, SMTP/API real para usuarios, refinamiento UX del CMS y sistema híbrido, adopción runtime de contratos nuevos por API/sistema híbrido, plan transversal de pruebas de integracion y versionado draft/publish.
 - Pendiente: SMTP real con adjunto XLSX, publicación versionada draft/publish, upload real de Media y persistencia API de biblioteca, cache incremental, query executor contextual, outbox real, idempotencia runtime, persistencia local y empaquetado nativo.
 - Bloqueado: sync real y publicación productiva quedan bloqueados hasta cerrar contratos de cifrado, auth/permisos runtime, outbox/idempotencia y validación de payloads.
@@ -36,7 +36,7 @@
 - UX/UI: todo cambio frontend requiere auditoría de diseño y repetición de ciclo si hay hallazgos bloqueantes.
 - Smoke Neon: publicar sitio de laboratorio por API, reiniciar API y verificar que marca, menú y bloques siguen persistidos.
 - Responsive CMS/Landing: auditoría UX/UI en `1366x768`, `1024x640` y `375x667`, con scroll forzado y sin overflow horizontal bloqueante.
-- Auditoría UX/UI 2026-07-15: landing validada en desktop/tablet/mobile sin overflow horizontal ni elementos fuera de viewport; capturas en `logs/auditoria-final-ux`. CMS validado por navegador en `1366x768` y `390x844`, sin overflow horizontal móvil, con capturas en `logs/screenshots/cms-account-users-media`.
+- Auditoría UX/UI 2026-07-15: landing validada en desktop/tablet/mobile sin overflow horizontal ni elementos fuera de viewport; capturas en `logs/auditoria-final-ux`. CMS validado por navegador en `1366x768` y `390x844`, sin overflow horizontal móvil, con capturas en `logs/screenshots/cms-account-users-media`. Nueva auditoría CMS/Landing: menú externo/PDF, anclas, orden de secciones y ocultamiento de títulos invisibles validado en `logs/screenshots/cms-menu-parity`.
 
 ## Decisiones aplicadas
 
@@ -47,6 +47,10 @@
 - API usa Neon/PostgreSQL para conservar el espejo público CMS; conserva fallback en memoria/demo si no hay `DATABASE_OPERATIONAL_URL`.
 - CMS y landing tienen fallback local para compilar sin API encendida.
 - CMS carga inicialmente desde `GET /v1/public/:tenantSlug/site`; con API arriba, Contenido, Paginas/menu y Vista espejo parten de la misma verdad que la landing.
+- La landing respeta el orden de bloques publicado. `metricStrip` y `logoStrip`
+  ya no son forzados arriba por el renderer.
+- El menú normaliza `Servicios`, `Acreditaciones` y `Contacto` a anclas cuando
+  apuntan a la home, y conserva enlaces externos/PDF con `linkType`.
 - `sistema-hibrido` queda preparado con modo offline forzado, sin robar foco al primer entregable.
 - El CMS ya no concentra contenido, diseño y auditoría en una sola vista: usa shell lateral izquierda y navegación por secciones.
 - Los avisos de guardado/publicación desaparecen automáticamente y distinguen publicación confirmada de guardado local sin confirmación de API.
@@ -69,6 +73,9 @@
 - Agregar estados vacíos/error en selección de negocio y flujos de auditoría.
 - Conectar `Mi cuenta`, `Usuarios` y `Media` a API/auth/storage reales. Hoy funcionan en estado local CMS.
 - Convertir Media por URL en carga real de archivos con selector reutilizable en hero, galería, SEO y perfil.
+- Conectar selector Media al menú PDF descargable; hoy se puede pegar URL del archivo, pero no elegirlo desde biblioteca.
+- Convertir Vista espejo resumida en vista 1:1 reutilizando renderer real de landing.
+- Revisar claims comerciales/regulatorios antes de publicar sitios reales: porcentajes, volumen anual, acreditaciones y aceptación por autoridades requieren evidencia.
 - Mejorar todavía más el editor espejo para modificar columnas/posiciones finas del layout sin depender de convenciones en `settings`.
 
 ## Bloqueos técnicos antes de integración real

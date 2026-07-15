@@ -63,11 +63,12 @@ Puertos:
 2. Editar paginas, menu, estilos y bloques.
 3. Gestionar Mi cuenta, usuarios y media desde sus secciones.
 4. Agregar/reordenar/eliminar secciones.
-5. Publicar sitio.
-6. Reiniciar API.
-7. Confirmar que `GET /v1/public/demo/site` conserva marca, menu, paginas y bloques.
-8. Abrir landing y confirmar que renderiza el contenido publicado.
-9. Confirmar metadata SEO en landing: title, description y `og:image` deben
+5. Agregar al menu una pagina interna, una URL externa y un PDF/archivo descargable.
+6. Publicar sitio.
+7. Reiniciar API.
+8. Confirmar que `GET /v1/public/demo/site` conserva marca, menu, paginas, bloques, `linkType` y orden.
+9. Abrir landing y confirmar que renderiza el contenido publicado.
+10. Confirmar metadata SEO en landing: title, description y `og:image` deben
    salir desde `page.seo` cuando exista.
 
 Fixture de prueba recomendado:
@@ -124,8 +125,9 @@ Para frontend, tomar capturas al menos en:
 
 1. Completar publicacion versionada: borrador vs publicado.
 2. Conectar Mi cuenta/Usuarios/Media a API real, SMTP y storage.
-3. Agregar selector de Media dentro de hero, galeria, SEO y foto de perfil.
+3. Agregar selector de Media dentro de hero, galeria, SEO, foto de perfil y menu PDF.
 4. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime.
-5. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
+5. Convertir Vista espejo en render 1:1 con landing o renombrarla como vista resumida.
+6. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
    en `settings`.
-6. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
+7. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
