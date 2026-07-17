@@ -4,6 +4,11 @@
 
 `http://localhost:3000/v1`
 
+## Variables de entorno locales
+
+La API carga `repos/api/.env` al iniciar mediante `dotenv/config`. El archivo
+`.env` esta ignorado por Git; solo se debe commitear `.env.example`.
+
 ## Endpoints iniciales
 
 - `GET /v1`: health check.

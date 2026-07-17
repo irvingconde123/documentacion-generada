@@ -23,6 +23,7 @@ desde CMS, persistido en Neon y renderizado por la landing.
 ## Base de datos
 
 - Variable actual: `DATABASE_URL`.
+- La API carga `repos/api/.env` al iniciar mediante `dotenv/config`.
 - Compatibilidad temporal: el API tambien debe aceptar `DATABASE_OPERATIONAL_URL`
   mientras se migran scripts/documentacion viejos.
 - Rama Neon objetivo: `production_ecosistemaNegocio`.
@@ -39,6 +40,8 @@ desde CMS, persistido en Neon y renderizado por la landing.
   `SMTP_PASSWORD` y `MAIL_FROM`.
 - Si faltan variables SMTP, los reportes quedan en modo simulado para no romper
   desarrollo local.
+- El `.env` real de `repos/api` es local y esta ignorado por Git; no subir
+  secretos a documentacion ni repos.
 
 ## Servidores locales esperados
 
