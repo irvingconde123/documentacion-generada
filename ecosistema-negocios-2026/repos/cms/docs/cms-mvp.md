@@ -7,6 +7,7 @@
 - Lectura de campos de formulario de leads.
 - Fallback local para desarrollo sin API.
 - Login local con usuario seed `irving.condem@gmail.com`.
+- Login en entorno no productivo precarga correo y contrasena seed para agilizar entrada local; en produccion no se envian valores por defecto al formulario.
 - Seleccion de negocio antes de entrar al dashboard.
 - Editor de contenido y diseno con publicacion hacia API.
 - Solicitud de reportes de auditoria por correo en modo simulado o SMTP.
