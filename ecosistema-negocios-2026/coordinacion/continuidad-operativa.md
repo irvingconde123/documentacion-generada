@@ -157,6 +157,6 @@ Para frontend, tomar capturas al menos en:
 - Documentacion generada publica:
   `https://github.com/irvingconde123/documentacion-generada`
 - Coordinacion privada del proyecto:
-  `https://github.com/irvingconde123/ecosistema-negocios-2026-coordinacion`
+  `https://github.com/irvingconde123/ecosistema-negocios-2026-docs`
 - Antes de cerrar una funcion, sincronizar `coordinacion` y docs relevantes en:
   `C:\Users\irvin\OneDrive\Escritorio\documentación_generada\ecosistema-negocios-2026`

@@ -65,7 +65,7 @@
 - La landing de laboratorio ya incorpora la estructura tomada de `Captura_*_Landing`: hero oscuro con overlays, métricas, organismos, servicios, misión, acreditaciones, CTA regulatorio, contacto y footer.
 - SEO básico por página ya se transporta en `page.seo` y la landing lo usa en `generateMetadata`.
 - `documentación_generada` quedó conectado a `https://github.com/irvingconde123/documentacion-generada` como repositorio público.
-- `coordinacion` quedó conectado a `https://github.com/irvingconde123/ecosistema-negocios-2026-coordinacion` como repositorio privado.
+- `coordinacion` quedó conectado a `https://github.com/irvingconde123/ecosistema-negocios-2026-docs` como repositorio privado.
 - La documentación relevante de este proyecto debe sincronizarse también en `C:\Users\irvin\OneDrive\Escritorio\documentación_generada\ecosistema-negocios-2026` antes de cerrar una función.
 
 ## Pendientes de alcance CMS
