@@ -43,7 +43,7 @@ desde CMS, persistido en Neon y renderizado por la landing.
 - El `.env` real de `repos/api` es local y esta ignorado por Git; no subir
   secretos a documentacion ni repos.
 - Antes de enviar un reporte real puede llamarse
-  `POST /v1/cms/:tenantSlug/audit-reports/preview`; guarda HTML y CSV en
+  `POST /v1/cms/:tenantSlug/audit-reports/preview`; guarda HTML y Excel en
   `logs/audit-reports` sin enviar correo.
 
 ## Servidores locales esperados
@@ -170,6 +170,11 @@ Para frontend, tomar capturas al menos en:
 - Validacion ejecutada el 2026-07-17: `repos/site-renderer npm run build`,
   `repos/cms npm run lint/build`, `repos/landing npm run lint/build`; capturas:
   `logs/screenshots/cms-shared-renderer`.
+- Validacion ejecutada el 2026-07-17: reporte de auditoria multi-pestana con SMTP real.
+  Se generaron 38 movimientos con dos actores incluyendo login, usuarios,
+  contrasenas, media, contenido, diseno, sync y reportes. El Excel final queda en
+  `logs/audit-reports/auditoria-demo-2026-07-17T19-03-01-810Z.xlsx` y el correo
+  fue aceptado por Gmail SMTP.
 
 ## Repositorios de documentacion
 

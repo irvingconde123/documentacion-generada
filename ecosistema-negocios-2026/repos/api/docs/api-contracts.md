@@ -35,8 +35,9 @@ La API carga `repos/api/.env` al iniciar mediante `dotenv/config`. El archivo
 - `PUT /v1/cms/:tenantSlug/media/:mediaId`: actualiza item de Media.
 - `DELETE /v1/cms/:tenantSlug/media/:mediaId`: elimina item de Media.
 - `GET /v1/cms/:tenantSlug/audit-reports/recent`: ultimos eventos de auditoria.
+- `POST /v1/cms/:tenantSlug/audit-reports/events/login`: registra inicio de sesion o intento fallido desde el CMS local.
 - `POST /v1/cms/:tenantSlug/audit-reports/email`: solicita reporte de auditoria por correo o simulacion local.
-- `POST /v1/cms/:tenantSlug/audit-reports/preview`: genera HTML y CSV localmente para revision sin enviar correo.
+- `POST /v1/cms/:tenantSlug/audit-reports/preview`: genera HTML y Excel localmente para revision sin enviar correo.
 - `POST /v1/leads`: captura lead desde landing.
 - `GET /v1/leads`: inspeccion local temporal de leads recibidos.
 - `GET /v1/sync/:tenantSlug/status`: estado de sincronizacion para clientes offline-first.
@@ -150,12 +151,18 @@ Persistencia:
 - Simulado: si falta `SMTP_HOST`, `SMTP_USER` o `SMTP_PASSWORD`, registra la
   solicitud y responde `mail.mode: "simulated"` sin enviar correo real.
 - SMTP real: si las tres variables existen, envia el reporte por correo con un
-  adjunto CSV llamado `auditoria-<tenant>.csv`.
-- Preview local: `POST /preview` guarda el mismo HTML y CSV que usara el correo
+  adjunto Excel llamado `auditoria-<tenant>.xlsx`.
+- El correo incluye un resumen ejecutivo y los ultimos 5 movimientos; el Excel
+  separa el detalle en pestanas de resumen, todos los movimientos y secciones
+  por tipo de actividad.
+- Preview local: `POST /preview` guarda el mismo HTML y Excel que usara el correo
   en `logs/audit-reports` sin enviar nada.
-- Los eventos expuestos por API y el CSV adjunto redactan datos sensibles en
+- Los eventos expuestos por API y el Excel adjunto redactan datos sensibles en
   `details`, incluyendo contrasenas, tokens, secretos, URLs de base de datos,
   credenciales SMTP, headers y payloads/cuerpos completos.
+- La version actual registra auditoria para login, Mi cuenta, usuarios,
+  contrasenas temporales/cambio de contrasena, Media, contenido publicado,
+  diseno, vista espejo/sitio, sync offline y solicitudes de reporte.
 
 Variables:
 
