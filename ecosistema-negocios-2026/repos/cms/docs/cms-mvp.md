@@ -32,6 +32,7 @@
 - Vista espejo con edicion inline: textos editables desde el render, listas editables por linea, controles de color/marca/fuente, cambio de imagen principal/galeria por URL, subir/bajar secciones y quitar secciones desde la previsualizacion.
 - Vista espejo con editor tradicional colapsable para dejar el preview como foco principal.
 - Listas complejas en Vista espejo se editan por tarjetas con campos humanos, no por textarea tecnico.
+- Los paneles inline de Vista espejo se renderizan como bloques normales con espaciado propio para evitar que se encimen o queden detras del contenido.
 - Selector Media disponible en imagen principal, galeria, SEO y fotos de perfil.
 - Renderer visual compartido en `repos/site-renderer`, usado por CMS Vista espejo y landing publica.
 - Acciones de Mi cuenta, Usuarios y Media escriben hacia endpoints API reales y conservan fallback local si la API no responde.
@@ -50,7 +51,7 @@
   `POST /v1/cms/:tenantSlug/media/uploads` con `multipart/form-data` (`file`, `title?`, `altText?`, `type: image|document|video`, `tags?`) debe validar MIME/tamano, guardar el binario en storage, devolver `{ id?, url, title, altText, type, status, tags }` y dejar `url` como enlace publico/firmado usable por landing, SEO, menu y perfiles. El CMS ya guarda metadatos via `/cms/:tenantSlug/media`; cuando exista este endpoint, primero sube el binario y despues persiste la respuesta como item Media.
 - Publicar `@ecosistema/site-renderer` como paquete interno versionado en vez de tarball local.
 - Revisar claims comerciales/regulatorios antes de publicar sitios reales: precision, volumen anual, acreditaciones y aceptacion por autoridades deben tener evidencia o texto menos absoluto.
-- Refinar UX de Vista espejo: agregar indicador de cambios sin guardar, mejorar posicionamiento de paneles cuando el preview sea angosto y permitir ajustes finos de layout sin depender de convenciones en `settings`.
+- Refinar UX de Vista espejo: agregar indicador de cambios sin guardar y permitir ajustes finos de layout sin depender de convenciones en `settings`.
 
 ## Validacion reciente
 

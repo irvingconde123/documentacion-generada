@@ -40,6 +40,7 @@
 - Validación 2026-07-17: Vista espejo inline validada con CMS `4200`, API `3000` y landing `3100`; capturas en `logs/screenshots/cms-inline-mirror`. Resultado: 18 textos editables, 2 controles de color, controles de imagen/listas, botones de subir/bajar/quitar, publicación confirmada, landing visible y sin overflow horizontal móvil.
 - Validación 2026-07-17: renderer compartido y editor humano de listas validados con `npm run lint/build` en CMS y landing; capturas en `logs/screenshots/cms-shared-renderer`. Resultado: `@ecosistema/site-renderer` alimenta CMS Vista espejo y landing, el editor tradicional queda colapsable, y acreditaciones/listas se editan por tarjetas con campos separados.
 - Validación 2026-07-17: API/CMS admin reforzados con permisos runtime y SMTP de auditoría. Comandos: `repos/api npm run build`, `npm test -- --runInBand`, `npm run test:e2e -- --runInBand`, `repos/cms npm run lint`, `npm run build`. Resultado: API exige actor activo por tenant/rol; CMS manda `requestedByUserId`; Media acepta URL pública o archivo local pequeño como fallback documentado.
+- Validación 2026-07-17: reporte de auditoría SMTP enviado realmente a `irving.condem@gmail.com`. Antes del envío se generó preview local en `logs/audit-reports`, agente backend/security aprobó CSV/HTML sin secretos, y Gmail SMTP respondió `250 OK`. Vista espejo corrigió paneles inline para que no usen `absolute/z-index` ni se encimen sobre otros controles.
 
 ## Decisiones aplicadas
 
@@ -76,7 +77,7 @@
 
 - Separar guardar borrador de publicar cuando exista versionado en API.
 - Permitir ocultar bloques desde la UI; agregar, eliminar y reordenar ya está implementado.
-- Refinar Vista espejo inline: mejorar posicionamiento de paneles flotantes cuando el preview está muy angosto y agregar indicador de cambios sin guardar.
+- Refinar Vista espejo inline: agregar indicador de cambios sin guardar.
 - Ocultar o mover a modo avanzado los datos técnicos como `slug`, ids internos y JSON.
 - Definir tokens visuales globales para primario, éxito, advertencia, error, bordes y texto secundario.
 - Agregar estados vacíos/error en selección de negocio y flujos de auditoría.

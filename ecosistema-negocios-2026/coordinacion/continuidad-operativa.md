@@ -42,6 +42,9 @@ desde CMS, persistido en Neon y renderizado por la landing.
   desarrollo local.
 - El `.env` real de `repos/api` es local y esta ignorado por Git; no subir
   secretos a documentacion ni repos.
+- Antes de enviar un reporte real puede llamarse
+  `POST /v1/cms/:tenantSlug/audit-reports/preview`; guarda HTML y CSV en
+  `logs/audit-reports` sin enviar correo.
 
 ## Servidores locales esperados
 
