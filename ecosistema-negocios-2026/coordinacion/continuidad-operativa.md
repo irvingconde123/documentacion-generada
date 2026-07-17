@@ -17,6 +17,7 @@ desde CMS, persistido en Neon y renderizado por la landing.
 - CMS: `repos/cms`
 - Landing: `repos/landing`
 - Contratos: `repos/shared-contracts`
+- Renderer visual compartido: `repos/site-renderer`
 - Coordinacion: `coordinacion`
 
 ## Base de datos
@@ -74,8 +75,9 @@ Puertos:
    salir desde `page.seo` cuando exista.
 12. En Vista espejo, probar edición inline sin depender del editor tradicional:
     cambiar un texto visible, cambiar color de botones, abrir "Editar servicios"
-    o "Editar acreditaciones", cambiar una imagen por URL, mover una sección y
-    quitar una sección no crítica en un borrador de prueba.
+    o "Editar acreditaciones", editar tarjetas de lista con campos separados,
+    cambiar una imagen por URL o selector Media, mover una sección y quitar una
+    sección no crítica en un borrador de prueba.
 13. Guardar borrador desde Vista espejo y confirmar que también se sincronizan
     los cambios de diseño cuando se editaron colores o marca desde el preview.
 
@@ -118,6 +120,7 @@ El fixture `logs/lab-reference-site.json` ya modela esa estructura con bloques:
 
 ```powershell
 cd repos/shared-contracts; npm run build
+cd repos/site-renderer; npm run build
 cd repos/api; npm run build; npm test -- --runInBand; npm run test:e2e -- --runInBand
 cd repos/cms; npm run lint; npm run build
 cd repos/landing; npm run lint; npm run build
@@ -132,15 +135,14 @@ Para frontend, tomar capturas al menos en:
 ## Pendientes inmediatos
 
 1. Completar publicacion versionada: borrador vs publicado.
-2. Conectar Mi cuenta/Usuarios/Media a API real, SMTP y storage.
-3. Agregar selector de Media dentro de hero, galeria, SEO y foto de perfil.
-4. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime.
-5. Extraer renderer compartido para que Vista espejo y landing usen exactamente el mismo codigo.
-6. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
+2. Sumar SMTP real y storage binario para Media.
+3. Publicar `@ecosistema/site-renderer` como paquete interno versionado en vez de tarball local.
+4. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime. Hoy las mutaciones administrativas usan `requestedByUserId` y validacion de rol contra usuarios persistidos.
+5. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
    en `settings`.
-7. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
-8. Refinar UX de Vista espejo: colapsar el editor tradicional en desktop o
-   convertirlo en pestaña para que el preview sea la pantalla principal.
+6. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
+7. Refinar UX de Vista espejo: agregar indicador de cambios sin guardar y mejorar
+   posicionamiento de paneles flotantes cuando el preview esta angosto.
 
 ## Evidencia reciente
 
@@ -151,6 +153,9 @@ Para frontend, tomar capturas al menos en:
 - Validacion ejecutada el 2026-07-17: `repos/cms npm run lint`, `repos/cms npm run build`,
   `repos/landing npm run lint`; Playwright local contra CMS `4200`, API `3000` y landing
   `3100`. Capturas: `logs/screenshots/cms-inline-mirror`.
+- Validacion ejecutada el 2026-07-17: `repos/site-renderer npm run build`,
+  `repos/cms npm run lint/build`, `repos/landing npm run lint/build`; capturas:
+  `logs/screenshots/cms-shared-renderer`.
 
 ## Repositorios de documentacion
 

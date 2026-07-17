@@ -16,6 +16,19 @@
 - `PUT /v1/public/:tenantSlug/cms/content/home`: publica contenido home desde CMS.
 - `PUT /v1/public/:tenantSlug/cms/site`: publica paginas y menu desde la vista espejo del CMS.
 - `PUT /v1/public/:tenantSlug/cms/design`: publica diseno desde CMS.
+- `GET /v1/cms/:tenantSlug/account/:userId`: datos de Mi cuenta.
+- `PATCH /v1/cms/:tenantSlug/account/:userId`: actualiza nombre y foto de Mi cuenta.
+- `POST /v1/cms/:tenantSlug/account/:userId/password/temporary`: prepara contrasena temporal propia.
+- `POST /v1/cms/:tenantSlug/account/:userId/password/change`: cambia contrasena con temporal vigente.
+- `GET /v1/cms/:tenantSlug/users`: usuarios CMS del tenant.
+- `POST /v1/cms/:tenantSlug/users`: crea usuario CMS con correo unico.
+- `PATCH /v1/cms/:tenantSlug/users/:userId`: edita nombre, foto, rol y estado.
+- `POST /v1/cms/:tenantSlug/users/:userId/password/temporary`: prepara contrasena temporal para usuario.
+- `GET /v1/cms/:tenantSlug/password-reset-requests/recent`: ultimas solicitudes de temporales.
+- `GET /v1/cms/:tenantSlug/media`: biblioteca Media por metadatos y URL.
+- `POST /v1/cms/:tenantSlug/media`: crea item de Media por URL publica.
+- `PUT /v1/cms/:tenantSlug/media/:mediaId`: actualiza item de Media.
+- `DELETE /v1/cms/:tenantSlug/media/:mediaId`: elimina item de Media.
 - `GET /v1/cms/:tenantSlug/audit-reports/recent`: ultimos eventos de auditoria.
 - `POST /v1/cms/:tenantSlug/audit-reports/email`: solicita reporte de auditoria por correo o simulacion local.
 - `POST /v1/leads`: captura lead desde landing.
@@ -85,6 +98,39 @@ de base de datos configurada.
 - Fallback local: si no hay URL de base de datos o la lectura falla, el API usa
   contenido demo/en memoria para no bloquear desarrollo local.
 
+## CMS: Mi cuenta, Usuarios y Media
+
+Los endpoints administrativos usan contratos de `@ecosistema/shared-contracts`
+exportados desde el paquete principal.
+
+Usuarios:
+
+- `email` se normaliza a minusculas al crear y queda inmutable.
+- `role` acepta `admin` y `editor`.
+- `status` acepta `active` e `inactive`.
+- Mientras no existan guards reales, las mutaciones administrativas requieren
+  `requestedByUserId`; API valida que ese usuario pertenezca al tenant y sea
+  `admin`.
+- Las contrasenas temporales viven 2 horas. En esta fase quedan en `testMode` y
+  la respuesta incluye `temporaryPassword` para que el CMS pueda mostrarla en
+  desarrollo local. Con SMTP real, ese campo debe omitirse y enviarse por correo.
+
+Media:
+
+- La biblioteca persiste solo metadatos y `url` publica.
+- `type` acepta `image`, `document` y `video`.
+- `status` acepta `active` y `archived`.
+- `url` debe iniciar con `http://` o `https://`.
+- TODO: agregar upload binario real cuando exista storage de archivos. El
+  contrato actual no recibe multipart ni guarda blobs.
+
+Persistencia:
+
+- Tablas: `cms_users`, `cms_password_reset_requests`, `cms_media_items`.
+- Se usa `DATABASE_URL` o `DATABASE_OPERATIONAL_URL`.
+- Si no hay base configurada o falla la lectura, API usa seed/en memoria
+  compatible con el CMS local.
+
 ## Estado
 
 API/CMS/Landing ya tienen primer flujo funcional: CMS publica paginas, menu,
@@ -92,4 +138,4 @@ diseno y bloques; API persiste el espejo; landing consume
 `GET /v1/public/:tenantSlug/site`.
 
 Pendiente para produccion: auth/guards reales, validacion runtime de payloads,
-versionado borrador/publicado, Media formal y pruebas de seguridad.
+versionado borrador/publicado, upload binario de Media y pruebas de seguridad.

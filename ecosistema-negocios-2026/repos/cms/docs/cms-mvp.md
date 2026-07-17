@@ -30,6 +30,11 @@
 - Vista espejo con renderer visual tipo landing: hero, menu, servicios, metricas, organismos, mision, acreditaciones, CTA y footer en el mismo orden publicado.
 - Vista espejo responsive: en movil aparece antes del formulario de edicion; en escritorio usa un marco escalado con scroll interno como respaldo para evitar recortes/overflow global.
 - Vista espejo con edicion inline: textos editables desde el render, listas editables por linea, controles de color/marca/fuente, cambio de imagen principal/galeria por URL, subir/bajar secciones y quitar secciones desde la previsualizacion.
+- Vista espejo con editor tradicional colapsable para dejar el preview como foco principal.
+- Listas complejas en Vista espejo se editan por tarjetas con campos humanos, no por textarea tecnico.
+- Selector Media disponible en imagen principal, galeria, SEO y fotos de perfil.
+- Renderer visual compartido en `repos/site-renderer`, usado por CMS Vista espejo y landing publica.
+- Acciones de Mi cuenta, Usuarios y Media escriben hacia endpoints API reales y conservan fallback local si la API no responde.
 - Guardar borrador desde Vista espejo tambien guarda y publica cambios de diseno cuando se editaron marca, colores o fuente desde el preview.
 - Menu de navegacion permite enlaces a paginas internas, URL externa y PDF/archivo descargable.
 - El menu de navegacion permite elegir un documento activo desde Media para enlaces PDF/archivo descargable; al elegirlo toma el nombre del archivo y publica `linkType: "download"`.
@@ -41,12 +46,10 @@
 - Integrar permisos Admin/Editor.
 - Configurar envio SMTP real y adjunto XLSX.
 - Separar borrador de publicacion real.
-- Formalizar upload real de Media y persistencia API para biblioteca compartida entre entornos.
-- Conectar selector de Media dentro de hero, galeria, SEO y foto de perfil.
-- Validar imagenes SEO desde el modulo Media cuando exista biblioteca formal.
-- Extraer el renderer de landing a paquete compartido para que Vista espejo y landing usen exactamente el mismo codigo visual.
+- Formalizar upload real de Media binaria; hoy Media se maneja por URL/metadatos y API real.
+- Publicar `@ecosistema/site-renderer` como paquete interno versionado en vez de tarball local.
 - Revisar claims comerciales/regulatorios antes de publicar sitios reales: precision, volumen anual, acreditaciones y aceptacion por autoridades deben tener evidencia o texto menos absoluto.
-- Refinar UX de Vista espejo: hacer colapsable el editor tradicional, mejorar edicion de tarjetas individuales y conectar selector Media a los controles inline de imagen.
+- Refinar UX de Vista espejo: agregar indicador de cambios sin guardar, mejorar posicionamiento de paneles cuando el preview sea angosto y permitir ajustes finos de layout sin depender de convenciones en `settings`.
 
 ## Validacion reciente
 
@@ -54,3 +57,5 @@
 - 2026-07-17: validacion Playwright local contra CMS `4200`, API `3000` y landing `3100`.
 - Evidencia visual: `logs/screenshots/cms-inline-mirror`.
 - Resultado: Vista espejo muestra controles inline, publica borrador, landing responde y no hay overflow horizontal movil.
+- 2026-07-17: `repos/site-renderer npm run build`, `repos/cms npm run lint/build` y `repos/landing npm run lint/build` pasan con renderer compartido.
+- Evidencia visual adicional: `logs/screenshots/cms-shared-renderer`.

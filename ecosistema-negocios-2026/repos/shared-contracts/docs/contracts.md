@@ -52,6 +52,14 @@ Propuestos para Sprint 0 y listos para consumo inicial por API, CMS y landing.
 | CmsSiteMirrorResponse | API/CMS | CMS/landing | API/CMS | propuesto | 0.1 |
 | NavigationMenuItemResponse | CMS | API/CMS/landing | API/CMS | propuesto | 0.1 |
 | PermissionCheckRequest | API | API | CMS, sistema hibrido | propuesto | 0.1 |
+| CmsManagedUser | API/CMS | CMS | API/CMS | propuesto | 0.1 |
+| UpdateCmsAccountRequest | CMS | API | CMS | propuesto | 0.1 |
+| ChangeCmsPasswordRequest | CMS | API | CMS | propuesto | 0.1 |
+| CreateCmsUserRequest | CMS | API | CMS | propuesto | 0.1 |
+| UpdateCmsUserRequest | CMS | API | CMS | propuesto | 0.1 |
+| CmsPasswordResetRequest | API | CMS | API | propuesto | 0.1 |
+| CmsMediaItem | API/CMS | CMS | API/CMS | propuesto | 0.1 |
+| UpsertCmsMediaRequest | CMS | API | CMS | propuesto | 0.1 |
 
 ## Decisiones de compatibilidad
 
@@ -137,3 +145,19 @@ El campo es opcional para mantener compatibilidad con paginas existentes. El CMS
 puede enviarlo en borradores y en el espejo publicado; API debe conservarlo
 dentro de cada pagina del sitio, y landing/sistema hibrido pueden usarlo para
 `title`, `meta description` y Open Graph cuando este presente.
+
+## CMS administracion
+
+Los contratos de `src/cms` cubren los endpoints reales de administracion usados
+por el CMS:
+
+- `CmsManagedUser.email` es inmutable despues de crear el usuario.
+- `CmsManagedUser.role` acepta `admin` y `editor`.
+- `CmsManagedUser.status` acepta `active` e `inactive`.
+- Los cambios administrativos usan `requestedByUserId`; mientras no existan
+  guards de autenticacion, API valida permisos contra el usuario persistido.
+- `CmsPasswordResetRequest.temporaryPassword` solo se devuelve en `testMode`.
+  Cuando exista SMTP real, el contrato debe conservar el campo opcional y enviar
+  el secreto por correo, no en la respuesta.
+- `CmsMediaItem` representa metadatos y URL publica. Upload binario queda fuera
+  de este contrato inicial; el campo `url` debe apuntar a un recurso existente.

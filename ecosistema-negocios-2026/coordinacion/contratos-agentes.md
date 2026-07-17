@@ -65,6 +65,13 @@ Un contrato solo puede pasar a `aceptado` cuando cumple los criterios de `coordi
 | SaveNavigationMenuRequest | CMS | API | CMS | propuesto | 0.1 |
 | CmsSiteMirrorResponse | API/CMS | CMS/landing | API/CMS | propuesto | 0.1 |
 | PermissionCheckRequest | API | API | CMS, sistema hibrido | propuesto | 0.1 |
+| CmsManagedUser | API/CMS | CMS | API/CMS | propuesto | 0.1 |
+| UpdateCmsAccountRequest | CMS | API | CMS | propuesto | 0.1 |
+| CreateCmsUserRequest | CMS | API | CMS | propuesto | 0.1 |
+| UpdateCmsUserRequest | CMS | API | CMS | propuesto | 0.1 |
+| CmsPasswordResetRequest | API | CMS | API | propuesto | 0.1 |
+| CmsMediaItem | API/CMS | CMS | API/CMS | propuesto | 0.1 |
+| UpsertCmsMediaRequest | CMS | API | CMS | propuesto | 0.1 |
 
 ## Regla
 

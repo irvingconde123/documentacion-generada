@@ -2,9 +2,9 @@
 
 ## Estado actual
 
-- Implementado: carpeta de trabajo, contratos compartidos, contratos de sync batch/outbox/idempotencia/cifrado/sesión híbrida/DTOs operativos, API base, módulo API `sync/offline`, API pública `site` y páginas por slug, persistencia PostgreSQL/Neon para el espejo CMS usando `DATABASE_URL`, rama Neon `production_ecosistemaNegocio`, CMS con login local, selector de negocio, shell lateral izquierda desplegable con iconos y scroll responsive, edición visual de bloques con alta/baja/reordenamiento, editor de diseño separado, SEO básico por página, páginas/menú/vista espejo conectados a API, menú con páginas internas/URL externa/PDF descargable, selector de Media para enlaces descargables, presets de laboratorio, reportes de auditoría simulados, alertas temporales, Mi cuenta editable, gestión local de usuarios por correo único e inmutable, contraseña temporal en modo prueba local, biblioteca Media por URL, Vista espejo visual tipo landing con preview arriba en móvil y marco escalado en escritorio, edición inline desde Vista espejo para textos, listas, colores, imagen principal/galería, mover y quitar secciones, CMS leyendo el mismo espejo `/site` que la landing, landing renderizando menú, páginas, hero, servicios, texto, galería/imágenes, métricas, organismos, misión, acreditaciones, CTA, footer, contacto y metadata SEO desde API, orden de secciones publicado por CMS, repositorios remotos de documentación creados en GitHub, y sistema híbrido web inicial con Vite/Ionic React, Capacitor/Electron base y modo offline forzado visible.
-- En progreso: integración de auth/permisos reales, SMTP/API real para usuarios, refinamiento UX del CMS y sistema híbrido, adopción runtime de contratos nuevos por API/sistema híbrido, plan transversal de pruebas de integracion y versionado draft/publish.
-- Pendiente: SMTP real con adjunto XLSX, publicación versionada draft/publish, upload real de Media y persistencia API de biblioteca, cache incremental, query executor contextual, outbox real, idempotencia runtime, persistencia local y empaquetado nativo.
+- Implementado: carpeta de trabajo, contratos compartidos, contratos de sync batch/outbox/idempotencia/cifrado/sesión híbrida/DTOs operativos, API base, módulo API `sync/offline`, API pública `site` y páginas por slug, persistencia PostgreSQL/Neon para el espejo CMS usando `DATABASE_URL`, endpoints API reales para Mi cuenta, Usuarios y Media por URL/metadatos, rama Neon `production_ecosistemaNegocio`, CMS con login local, selector de negocio, shell lateral izquierda desplegable con iconos y scroll responsive, edición visual de bloques con alta/baja/reordenamiento, editor de diseño separado, SEO básico por página, páginas/menú/vista espejo conectados a API, menú con páginas internas/URL externa/PDF descargable, selector de Media para enlaces descargables, presets de laboratorio, reportes de auditoría simulados, alertas temporales, Mi cuenta editable, gestión local de usuarios por correo único e inmutable, contraseña temporal en modo prueba local, biblioteca Media por URL, Vista espejo visual tipo landing con preview arriba en móvil y marco escalado en escritorio, edición inline desde Vista espejo para textos, listas, colores, imagen principal/galería, mover y quitar secciones, CMS leyendo el mismo espejo `/site` que la landing, landing renderizando menú, páginas, hero, servicios, texto, galería/imágenes, métricas, organismos, misión, acreditaciones, CTA, footer, contacto y metadata SEO desde API, orden de secciones publicado por CMS, repositorios remotos de documentación creados en GitHub, y sistema híbrido web inicial con Vite/Ionic React, Capacitor/Electron base y modo offline forzado visible.
+- En progreso: integración de auth/permisos reales, SMTP real para temporales, refinamiento UX del CMS y sistema híbrido, adopción runtime de contratos nuevos por sistema híbrido, plan transversal de pruebas de integracion y versionado draft/publish.
+- Pendiente: SMTP real con adjunto XLSX, publicación versionada draft/publish, upload real de Media con storage binario, cache incremental, query executor contextual, outbox real, idempotencia runtime, persistencia local y empaquetado nativo.
 - Bloqueado: sync real y publicación productiva quedan bloqueados hasta cerrar contratos de cifrado, auth/permisos runtime, outbox/idempotencia y validación de payloads.
 
 ## Agentes activos
@@ -20,7 +20,7 @@
 ## Plan de trabajo inmediato
 
 1. Agente 1 agrega auth/permisos, validación runtime de payloads y formaliza cifrado.
-2. Agente 2 conecta usuarios/media a API real, permisos visibles por rol y separación real de borrador/publicación.
+2. Agente 2 conecta Mi cuenta/Usuarios/Media a los endpoints API reales, permisos visibles por rol y separación real de borrador/publicación.
 3. Agente 1 configura SMTP real y generacion XLSX para auditoria.
 4. Agente 3 agrega cache incremental y SEO desde CMS.
 5. Agente 5 marca contratos aceptados cuando API/CMS/Landing/Sistema híbrido los validen.
@@ -38,6 +38,7 @@
 - Responsive CMS/Landing: auditoría UX/UI en `1366x768`, `1024x640` y `375x667`, con scroll forzado y sin overflow horizontal bloqueante.
 - Auditoría UX/UI 2026-07-15: landing validada en desktop/tablet/mobile sin overflow horizontal ni elementos fuera de viewport; capturas en `logs/auditoria-final-ux`. CMS validado por navegador en `1366x768` y `390x844`, sin overflow horizontal móvil, con capturas en `logs/screenshots/cms-account-users-media`. Nueva auditoría CMS/Landing: menú externo/PDF, anclas, orden de secciones y ocultamiento de títulos invisibles validado en `logs/screenshots/cms-menu-parity`. Vista espejo auditada por agente UX y Playwright temporal: capturas en `logs/screenshots/cms-mirror-1to1`; se corrigió recorte desktop, preview móvil demasiado abajo y nombres técnicos visibles. Media/PDF validado en `logs/screenshots/cms-media-menu`: documento guardado en Media, elegido en menú, publicado a API y visible en landing con atributo `download`.
 - Validación 2026-07-17: Vista espejo inline validada con CMS `4200`, API `3000` y landing `3100`; capturas en `logs/screenshots/cms-inline-mirror`. Resultado: 18 textos editables, 2 controles de color, controles de imagen/listas, botones de subir/bajar/quitar, publicación confirmada, landing visible y sin overflow horizontal móvil.
+- Validación 2026-07-17: renderer compartido y editor humano de listas validados con `npm run lint/build` en CMS y landing; capturas en `logs/screenshots/cms-shared-renderer`. Resultado: `@ecosistema/site-renderer` alimenta CMS Vista espejo y landing, el editor tradicional queda colapsable, y acreditaciones/listas se editan por tarjetas con campos separados.
 
 ## Decisiones aplicadas
 
@@ -66,20 +67,20 @@
 - SEO básico por página ya se transporta en `page.seo` y la landing lo usa en `generateMetadata`.
 - `documentación_generada` quedó conectado a `https://github.com/irvingconde123/documentacion-generada` como repositorio público.
 - `coordinacion` quedó conectado a `https://github.com/irvingconde123/ecosistema-negocios-2026-docs` como repositorio privado.
+- API admin CMS nuevo: `GET/PATCH /v1/cms/:tenantSlug/account/:userId`, `GET/POST/PATCH /v1/cms/:tenantSlug/users`, temporales en `/password/temporary`, y `GET/POST/PUT/DELETE /v1/cms/:tenantSlug/media`.
+- Renderer compartido nuevo: `repos/site-renderer`, remoto `https://github.com/irvingconde123/ecosistema-site-renderer`, consumido por CMS y landing mediante paquete local.
 - La documentación relevante de este proyecto debe sincronizarse también en `C:\Users\irvin\OneDrive\Escritorio\documentación_generada\ecosistema-negocios-2026` antes de cerrar una función.
 
 ## Pendientes de alcance CMS
 
 - Separar guardar borrador de publicar cuando exista versionado en API.
 - Permitir ocultar bloques desde la UI; agregar, eliminar y reordenar ya está implementado.
-- Refinar Vista espejo inline: panel tradicional colapsable, edición más cómoda de tarjetas individuales y selector Media dentro de cada control de imagen.
+- Refinar Vista espejo inline: mejorar posicionamiento de paneles flotantes cuando el preview está muy angosto y agregar indicador de cambios sin guardar.
 - Ocultar o mover a modo avanzado los datos técnicos como `slug`, ids internos y JSON.
 - Definir tokens visuales globales para primario, éxito, advertencia, error, bordes y texto secundario.
 - Agregar estados vacíos/error en selección de negocio y flujos de auditoría.
-- Conectar `Mi cuenta`, `Usuarios` y `Media` a API/auth/storage reales. Hoy funcionan en estado local CMS.
-- Convertir Media por URL en carga real de archivos con selector reutilizable en hero, galería, SEO y perfil.
-- Extraer el renderer de landing a paquete compartido para que Vista espejo y landing usen exactamente el mismo codigo visual.
-- Mantener selector Media en menú PDF y extenderlo a hero, galería, SEO y foto de perfil.
+- Convertir Media por URL/metadatos en carga real de archivos con selector reutilizable en hero, galería, SEO y perfil.
+- Publicar `@ecosistema/site-renderer` como paquete interno versionado en vez de depender de tarball local.
 - Revisar claims comerciales/regulatorios antes de publicar sitios reales: porcentajes, volumen anual, acreditaciones y aceptación por autoridades requieren evidencia.
 - Mejorar todavía más el editor espejo para modificar columnas/posiciones finas del layout sin depender de convenciones en `settings`.
 
