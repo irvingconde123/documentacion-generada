@@ -30,6 +30,8 @@ La API carga `repos/api/.env` al iniciar mediante `dotenv/config`. El archivo
 - `PATCH /v1/cms/:tenantSlug/users/:userId`: edita nombre, foto, rol y estado.
 - `POST /v1/cms/:tenantSlug/users/:userId/password/temporary`: prepara contrasena temporal para usuario.
 - `GET /v1/cms/:tenantSlug/password-reset-requests/recent`: ultimas solicitudes de temporales.
+- `GET /v1/cms/:tenantSlug/backups/recent`: lista respaldos recientes de cambios CMS disponibles por 2 dias.
+- `POST /v1/cms/:tenantSlug/backups/:backupId/rollback`: restaura un cambio vigente de usuario CMS.
 - `GET /v1/cms/:tenantSlug/media`: biblioteca Media por metadatos y URL.
 - `POST /v1/cms/:tenantSlug/media`: crea item de Media por URL publica.
 - `PUT /v1/cms/:tenantSlug/media/:mediaId`: actualiza item de Media.
@@ -139,10 +141,19 @@ Media:
 
 Persistencia:
 
-- Tablas: `cms_users`, `cms_password_reset_requests`, `cms_media_items`.
+- Tablas: `cms_users`, `cms_password_reset_requests`, `cms_media_items`,
+  `cms_change_backups`.
 - Se usa `DATABASE_URL` o `DATABASE_OPERATIONAL_URL`.
 - Si no hay base configurada o falla la lectura, API usa seed/en memoria
   compatible con el CMS local.
+- Cada creacion/modificacion/bloqueo/reactivacion de usuario guarda un respaldo
+  en `cms_change_backups` con `before_data`, `after_data` y vencimiento automatico
+  a 2 dias. La API publica solo metadatos de respaldo; los snapshots completos
+  quedan para rollback interno.
+- La eliminacion logica de usuarios se modela con `status: "inactive"`.
+- `POST /backups/:backupId/rollback` restaura solo respaldos vigentes de
+  `CMS_USER`. Si el usuario actual ya cambio despues del respaldo, responde
+  conflicto para evitar pisar ediciones posteriores.
 
 ## SMTP para reportes
 
@@ -163,6 +174,8 @@ Persistencia:
 - La version actual registra auditoria para login, Mi cuenta, usuarios,
   contrasenas temporales/cambio de contrasena, Media, contenido publicado,
   diseno, vista espejo/sitio, sync offline y solicitudes de reporte.
+- Los eventos se persisten en `audit_events` cuando hay base configurada. El
+  servicio conserva fallback en memoria para desarrollo local sin DB.
 
 Variables:
 

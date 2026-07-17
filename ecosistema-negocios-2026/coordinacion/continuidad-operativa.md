@@ -30,7 +30,12 @@ desde CMS, persistido en Neon y renderizado por la landing.
 - El CLI de Neon fue reapuntado por el usuario a otra cuenta/proyecto; la rama
   `production_ecosistemaNegocio` tambien fue creada/confirmada ahi el
   2026-07-15.
-- Tabla usada por CMS/Landing: `public_site_mirrors`.
+- Tablas usadas por CMS/Landing/auditoría: `public_site_mirrors`, `cms_users`,
+  `cms_password_reset_requests`, `cms_media_items`, `audit_events` y
+  `cms_change_backups`.
+- `cms_change_backups` conserva snapshots de usuarios por 2 días para rollback.
+- La eliminación lógica de usuarios es `status: inactive`; no borrar físicamente
+  usuarios mientras no exista política formal de retención.
 - No escribir connection strings con secretos en documentacion, commits ni logs.
 
 ## Correo SMTP
@@ -77,6 +82,10 @@ Puertos:
 1. Entrar al CMS.
 2. Editar paginas, menu, estilos y bloques.
 3. Gestionar Mi cuenta, usuarios y media desde sus secciones.
+3.1. En API, validar que crear/modificar/bloquear/reactivar usuarios genere
+     eventos en `audit_events` y respaldos en `cms_change_backups`.
+3.2. Para rollback de usuarios, usar `GET /v1/cms/:tenantSlug/backups/recent`
+     y `POST /v1/cms/:tenantSlug/backups/:backupId/rollback`.
 4. Agregar/reordenar/eliminar secciones.
 5. Agregar al menu una pagina interna, una URL externa y un PDF/archivo descargable.
 6. Para PDF/archivo descargable, crear primero un documento en Media y elegirlo desde
