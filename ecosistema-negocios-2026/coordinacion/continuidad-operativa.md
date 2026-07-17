@@ -32,6 +32,14 @@ desde CMS, persistido en Neon y renderizado por la landing.
 - Tabla usada por CMS/Landing: `public_site_mirrors`.
 - No escribir connection strings con secretos en documentacion, commits ni logs.
 
+## Correo SMTP
+
+- Guia Google/Gmail: `coordinacion/smtp-google.md`.
+- API usa `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`,
+  `SMTP_PASSWORD` y `MAIL_FROM`.
+- Si faltan variables SMTP, los reportes quedan en modo simulado para no romper
+  desarrollo local.
+
 ## Servidores locales esperados
 
 ```powershell
@@ -135,7 +143,7 @@ Para frontend, tomar capturas al menos en:
 ## Pendientes inmediatos
 
 1. Completar publicacion versionada: borrador vs publicado.
-2. Sumar SMTP real y storage binario para Media.
+2. Completar SMTP para contrasenas temporales y sumar storage binario para Media.
 3. Publicar `@ecosistema/site-renderer` como paquete interno versionado en vez de tarball local.
 4. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime. Hoy las mutaciones administrativas usan `requestedByUserId` y validacion de rol contra usuarios persistidos.
 5. Ajustar editor espejo para posicionamiento fino sin depender de convenciones

@@ -108,9 +108,15 @@ Usuarios:
 - `email` se normaliza a minusculas al crear y queda inmutable.
 - `role` acepta `admin` y `editor`.
 - `status` acepta `active` e `inactive`.
-- Mientras no existan guards reales, las mutaciones administrativas requieren
-  `requestedByUserId`; API valida que ese usuario pertenezca al tenant y sea
-  `admin`.
+- Las mutaciones administrativas requieren `requestedByUserId`; API valida que
+  ese usuario pertenezca al tenant, este activo y tenga rol permitido.
+- `GET /account/:userId`, `PATCH /account/:userId` y cambio de contrasena
+  requieren que `requestedByUserId` sea el mismo usuario.
+- `GET /users`, `POST /users`, `PATCH /users/:userId`, temporales de terceros,
+  historial de temporales y auditoria requieren rol `admin`.
+- `GET/POST/PUT/DELETE /media` permite `admin` o `editor` activos.
+- En lecturas `GET`/`DELETE`, `requestedByUserId` viaja como query string; en
+  `POST`/`PATCH`/`PUT`, viaja en el body.
 - Las contrasenas temporales viven 2 horas. En esta fase quedan en `testMode` y
   la respuesta incluye `temporaryPassword` para que el CMS pueda mostrarla en
   desarrollo local. Con SMTP real, ese campo debe omitirse y enviarse por correo.
@@ -130,6 +136,29 @@ Persistencia:
 - Se usa `DATABASE_URL` o `DATABASE_OPERATIONAL_URL`.
 - Si no hay base configurada o falla la lectura, API usa seed/en memoria
   compatible con el CMS local.
+
+## SMTP para reportes
+
+`POST /v1/cms/:tenantSlug/audit-reports/email` funciona en dos modos:
+
+- Simulado: si falta `SMTP_HOST`, `SMTP_USER` o `SMTP_PASSWORD`, registra la
+  solicitud y responde `mail.mode: "simulated"` sin enviar correo real.
+- SMTP real: si las tres variables existen, envia el reporte por correo con un
+  adjunto CSV llamado `auditoria-<tenant>.csv`.
+
+Variables:
+
+```env
+MAIL_FROM=Ecosistema <tu-correo@gmail.com>
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=tu-correo@gmail.com
+SMTP_PASSWORD=contraseña-de-aplicacion-de-16-caracteres
+```
+
+Para Gmail se debe usar una contrasena de aplicacion de Google con verificacion
+en dos pasos activa. No usar la contrasena normal de la cuenta.
 
 ## Estado
 

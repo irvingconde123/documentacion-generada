@@ -22,8 +22,8 @@
 - Modulo SEO por pagina con titulo SEO, descripcion SEO e imagen para compartir usando el contrato `page.seo`.
 - Modulo Mi cuenta: nombre y foto editables, correo visible no editable.
 - Modulo Usuarios: alta de usuarios por correo unico, correo inmutable, edicion de nombre/foto/rol/estado.
-- Flujo de contrasena temporal para usuarios. En esta fase queda en modo prueba local; cuando exista SMTP/API de usuarios se debe enviar por correo.
-- Modulo Media: biblioteca local por URL con titulo, texto alternativo, tipo, estado, etiquetas, edicion y eliminacion.
+- Flujo de contrasena temporal para usuarios. En esta fase queda en modo prueba local; el API ya puede proteger permisos, pero falta enviar temporales por SMTP.
+- Modulo Media: biblioteca local por URL o carga local pequena como data URL/base64, con titulo, texto alternativo, tipo, estado, etiquetas, edicion y eliminacion. Los archivos `data:` quedan en CMS local hasta conectar storage binario.
 - El CMS arranca leyendo `GET /v1/public/:tenantSlug/site`, el mismo espejo que consume la landing, para evitar editar una copia distinta.
 - El formulario de Pagina principal sincroniza titulo/descripcion con el bloque Hero visible al publicar.
 - Los bloques `metricStrip` y `logoStrip` ya no muestran campos de titulo/descripcion como editables visibles porque la landing solo renderiza sus listas.
@@ -43,10 +43,11 @@
 ## Proximo bloque
 
 - Sustituir login local por auth real de API.
-- Integrar permisos Admin/Editor.
-- Configurar envio SMTP real y adjunto XLSX.
+- Integrar auth real de API en login CMS y permisos visibles por rol.
+- Conectar envio SMTP real para contrasenas temporales; reportes de auditoria ya tienen SMTP real con CSV, XLSX queda opcional.
 - Separar borrador de publicacion real.
-- Formalizar upload real de Media binaria; hoy Media se maneja por URL/metadatos y API real.
+- Formalizar upload real de Media binaria. Contrato pendiente sugerido:
+  `POST /v1/cms/:tenantSlug/media/uploads` con `multipart/form-data` (`file`, `title?`, `altText?`, `type: image|document|video`, `tags?`) debe validar MIME/tamano, guardar el binario en storage, devolver `{ id?, url, title, altText, type, status, tags }` y dejar `url` como enlace publico/firmado usable por landing, SEO, menu y perfiles. El CMS ya guarda metadatos via `/cms/:tenantSlug/media`; cuando exista este endpoint, primero sube el binario y despues persiste la respuesta como item Media.
 - Publicar `@ecosistema/site-renderer` como paquete interno versionado en vez de tarball local.
 - Revisar claims comerciales/regulatorios antes de publicar sitios reales: precision, volumen anual, acreditaciones y aceptacion por autoridades deben tener evidencia o texto menos absoluto.
 - Refinar UX de Vista espejo: agregar indicador de cambios sin guardar, mejorar posicionamiento de paneles cuando el preview sea angosto y permitir ajustes finos de layout sin depender de convenciones en `settings`.
