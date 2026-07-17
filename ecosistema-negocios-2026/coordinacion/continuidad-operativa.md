@@ -72,6 +72,12 @@ Puertos:
 10. Abrir landing y confirmar que renderiza el contenido publicado.
 11. Confirmar metadata SEO en landing: title, description y `og:image` deben
    salir desde `page.seo` cuando exista.
+12. En Vista espejo, probar edición inline sin depender del editor tradicional:
+    cambiar un texto visible, cambiar color de botones, abrir "Editar servicios"
+    o "Editar acreditaciones", cambiar una imagen por URL, mover una sección y
+    quitar una sección no crítica en un borrador de prueba.
+13. Guardar borrador desde Vista espejo y confirmar que también se sincronizan
+    los cambios de diseño cuando se editaron colores o marca desde el preview.
 
 Fixture de prueba recomendado:
 
@@ -133,6 +139,8 @@ Para frontend, tomar capturas al menos en:
 6. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
    en `settings`.
 7. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
+8. Refinar UX de Vista espejo: colapsar el editor tradicional en desktop o
+   convertirlo en pestaña para que el preview sea la pantalla principal.
 
 ## Evidencia reciente
 
@@ -140,3 +148,15 @@ Para frontend, tomar capturas al menos en:
 - Media/PDF en menu y landing: `logs/screenshots/cms-media-menu`.
 - Validacion ejecutada el 2026-07-15: `repos/cms npm run build`; Playwright temporal
   contra CMS `4200`, API `3000` y landing `3100`.
+- Validacion ejecutada el 2026-07-17: `repos/cms npm run lint`, `repos/cms npm run build`,
+  `repos/landing npm run lint`; Playwright local contra CMS `4200`, API `3000` y landing
+  `3100`. Capturas: `logs/screenshots/cms-inline-mirror`.
+
+## Repositorios de documentacion
+
+- Documentacion generada publica:
+  `https://github.com/irvingconde123/documentacion-generada`
+- Coordinacion privada del proyecto:
+  `https://github.com/irvingconde123/ecosistema-negocios-2026-coordinacion`
+- Antes de cerrar una funcion, sincronizar `coordinacion` y docs relevantes en:
+  `C:\Users\irvin\OneDrive\Escritorio\documentación_generada\ecosistema-negocios-2026`
