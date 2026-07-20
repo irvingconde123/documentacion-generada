@@ -30,12 +30,7 @@ desde CMS, persistido en Neon y renderizado por la landing.
 - El CLI de Neon fue reapuntado por el usuario a otra cuenta/proyecto; la rama
   `production_ecosistemaNegocio` tambien fue creada/confirmada ahi el
   2026-07-15.
-- Tablas usadas por CMS/Landing/auditoría: `public_site_mirrors`, `cms_users`,
-  `cms_password_reset_requests`, `cms_media_items`, `audit_events` y
-  `cms_change_backups`.
-- `cms_change_backups` conserva snapshots de usuarios por 2 días para rollback.
-- La eliminación lógica de usuarios es `status: inactive`; no borrar físicamente
-  usuarios mientras no exista política formal de retención.
+- Tabla usada por CMS/Landing: `public_site_mirrors`.
 - No escribir connection strings con secretos en documentacion, commits ni logs.
 
 ## Correo SMTP
@@ -48,7 +43,7 @@ desde CMS, persistido en Neon y renderizado por la landing.
 - El `.env` real de `repos/api` es local y esta ignorado por Git; no subir
   secretos a documentacion ni repos.
 - Antes de enviar un reporte real puede llamarse
-  `POST /v1/cms/:tenantSlug/audit-reports/preview`; guarda HTML y Excel en
+  `POST /v1/cms/:tenantSlug/audit-reports/preview`; guarda HTML y CSV en
   `logs/audit-reports` sin enviar correo.
 
 ## Servidores locales esperados
@@ -82,10 +77,6 @@ Puertos:
 1. Entrar al CMS.
 2. Editar paginas, menu, estilos y bloques.
 3. Gestionar Mi cuenta, usuarios y media desde sus secciones.
-3.1. En API, validar que crear/modificar/bloquear/reactivar usuarios genere
-     eventos en `audit_events` y respaldos en `cms_change_backups`.
-3.2. Para rollback de usuarios, usar `GET /v1/cms/:tenantSlug/backups/recent`
-     y `POST /v1/cms/:tenantSlug/backups/:backupId/rollback`.
 4. Agregar/reordenar/eliminar secciones.
 5. Agregar al menu una pagina interna, una URL externa y un PDF/archivo descargable.
 6. Para PDF/archivo descargable, crear primero un documento en Media y elegirlo desde
@@ -166,6 +157,8 @@ Para frontend, tomar capturas al menos en:
 6. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
 7. Refinar UX de Vista espejo: agregar indicador de cambios sin guardar y mejorar
    posicionamiento de paneles flotantes cuando el preview esta angosto.
+8. Continuar prueba `Hostlyc Clone Test`: el tenant `hostlyc-clon` ya existe, la landing local vive en `repos/landing-hostlyc` y el script `scripts/run-hostlyc-cms-smoke.mjs` genera movimientos reales. Falta implementar plantilla/contrato de agencia digital para clonar `https://hostlyc.com/` sin hardcodes de laboratorio.
+9. Generalizar `@ecosistema/site-renderer`: separar textos/claims de laboratorio de la salida pública, permitir variantes por sección y texto enriquecido seguro para highlights dentro de H1.
 
 ## Evidencia reciente
 
@@ -179,11 +172,14 @@ Para frontend, tomar capturas al menos en:
 - Validacion ejecutada el 2026-07-17: `repos/site-renderer npm run build`,
   `repos/cms npm run lint/build`, `repos/landing npm run lint/build`; capturas:
   `logs/screenshots/cms-shared-renderer`.
-- Validacion ejecutada el 2026-07-17: reporte de auditoria multi-pestana con SMTP real.
-  Se generaron 38 movimientos con dos actores incluyendo login, usuarios,
-  contrasenas, media, contenido, diseno, sync y reportes. El Excel final queda en
-  `logs/audit-reports/auditoria-demo-2026-07-17T19-03-01-810Z.xlsx` y el correo
-  fue aceptado por Gmail SMTP.
+- Validacion ejecutada el 2026-07-20: `repos/site-renderer npm run check/build`,
+  `repos/cms npm run build`, `repos/landing npm run build`,
+  `repos/landing-hostlyc npm run build`. Servicios locales: API `3000`, CMS `4200`,
+  landing Hostlyc `3101`. Capturas y evidencia en
+  `logs/screenshots/hostlyc-clone-test` y reporte tester en
+  `coordinacion/reportes-tester/hostlyc-clone-2026-07-20-inicial.md`.
+  Smoke mutante: `node scripts/run-hostlyc-cms-smoke.mjs` produjo 16 eventos,
+  5 backups y reporte local XLSX en `logs/audit-reports`.
 
 ## Repositorios de documentacion
 
