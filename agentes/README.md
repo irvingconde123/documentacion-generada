@@ -23,6 +23,7 @@ Cada agente debe dejar claro:
 | Idear experiencia visual desde cero o auditar un modulo frontend terminado | Disenador UX/UI | Al inicio de una pantalla/flujo o al final de un modulo para revisar diseno, espaciado, legibilidad, color y consistencia. |
 | Resolver una feature completa de baja/mediana complejidad de punta a punta | Desarrollador Fullstack | Cuando backend y frontend son acotados y no requieren arquitectura nueva ni decisiones profundas de datos. |
 | Conectar modulos ya construidos, validar contratos y comprobar flujos end-to-end | Integrador | Cuando varias piezas existen y deben funcionar juntas sin romper contratos. |
+| Probar el sistema como usuario no tecnico, recorrer pantallas, scrolls, responsive, botones, formularios e interrupciones | Tester de Usuario | Antes de entregar a usuarios reales, demos, MVPs o releases donde importa usabilidad real. |
 | Revisar calidad, pruebas, regresiones, accesibilidad, seguridad y criterios de merge | QA/Calidad | Antes de merge, release o cierre de modulo. |
 | Crear o mantener documentacion tecnica, guias, ADRs, changelog o manuales | Documentador | Durante y despues de cambios que deban ser entendibles por otros. |
 
@@ -122,7 +123,18 @@ Usalo para:
 - Crear casos de prueba funcionales y de regresion.
 - Validar que se cumplan los estandares globales.
 
-### 9. Documentador
+### 9. Tester de Usuario
+Archivo: [agente_tester.md](./agente_tester.md)
+
+Prueba el sistema como una persona no tecnica y ajena al proyecto. Recorre cada pantalla, hace scroll completo, valida responsive, toca cada boton, prueba formularios, interrumpe flujos criticos y detecta errores visuales, complejidad, redundancia, estados peligrosos y falta de manual de usuario.
+
+Usalo para:
+- Validar si un usuario real puede operar el sistema sin ayuda tecnica.
+- Probar todo el producto antes de una demo, MVP, release o entrega.
+- Detectar textos cortados, elementos encimados, scroll roto, responsive fallido o acciones confusas.
+- Forzar errores reales: doble click, cerrar pestana, refrescar, volver atras, perder conexion o repetir pagos.
+
+### 10. Documentador
 Archivo: [agente_documentador.md](./agente_documentador.md)
 
 Convierte decisiones, APIs, flujos y procesos en documentacion util. Mantiene READMEs, guias, ADRs, changelogs, diagramas, Storybook y referencias de usuario.
@@ -133,7 +145,7 @@ Usalo para:
 - Mantener changelog y migration guides.
 - Asegurar que una entrega pueda ser entendida y operada.
 
-### 10. Project Manager
+### 11. Project Manager
 Archivo: [agente_project_manager.md](./agente_project_manager.md)
 
 Ordena trabajo, alcance, dependencias, riesgos, fechas y comunicacion. No define la solucion tecnica final, pero fuerza claridad sobre que se hara, que no se hara y como se medira el cierre.
@@ -154,14 +166,16 @@ Usalo para:
 5. Backend implementa APIs y reglas.
 6. Frontend implementa la experiencia.
 7. Integrador valida contratos y flujo end-to-end.
-8. QA revisa calidad, pruebas, accesibilidad y regresiones.
-9. Documentador actualiza docs y changelog.
+8. Tester de Usuario prueba el sistema completo como usuario no tecnico.
+9. QA revisa calidad, pruebas, accesibilidad y regresiones.
+10. Documentador actualiza docs, manual de usuario y changelog.
 
 ### Cambio pequeno y acotado
 1. Fullstack implementa el cambio completo.
 2. Disenador UX/UI audita si toca UI visible.
-3. QA valida.
-4. Documentador actualiza solo si cambia comportamiento, API o configuracion.
+3. Tester de Usuario valida si el cambio afecta flujo visible o uso real.
+4. QA valida.
+5. Documentador actualiza solo si cambia comportamiento, API, manual o configuracion.
 
 ### Problema de performance
 1. QA o Integrador reproduce y mide.
@@ -228,21 +242,22 @@ Usalo para:
 
 ## Matriz RACI Simplificada
 
-| Actividad | PM | Arq | DBA | Back | Front | UX/UI | Full | Int | QA | Doc |
-|---|---|---|---|---|---|---|---|---|---|---|
-| Alcance y prioridad | R | C | C | C | C | C | C | C | C | I |
-| Arquitectura transversal | C | R | C | C | C | I | C | C | C | R |
-| Modelo de datos | I | C | R | C | I | I | C | I | C | R |
-| APIs y logica backend | I | C | C | R | I | I | R | C | C | R |
-| UI implementada | I | I | I | I | R | C | R | C | C | R |
-| Diseno visual y UX | C | I | I | I | C | R | C | I | C | R |
-| Integracion end-to-end | C | C | C | C | C | I | C | R | C | R |
-| Validacion de calidad | I | C | C | C | C | C | C | C | R | I |
-| Documentacion final | I | C | C | C | C | C | C | C | C | R |
+| Actividad | PM | Arq | DBA | Back | Front | UX/UI | Full | Int | Tester | QA | Doc |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Alcance y prioridad | R | C | C | C | C | C | C | C | C | C | I |
+| Arquitectura transversal | C | R | C | C | C | I | C | C | I | C | R |
+| Modelo de datos | I | C | R | C | I | I | C | I | I | C | R |
+| APIs y logica backend | I | C | C | R | I | I | R | C | I | C | R |
+| UI implementada | I | I | I | I | R | C | R | C | C | C | R |
+| Diseno visual y UX | C | I | I | I | C | R | C | I | C | C | R |
+| Integracion end-to-end | C | C | C | C | C | I | C | R | C | C | R |
+| Prueba de usuario no tecnico | C | I | I | C | C | C | C | C | R | C | C |
+| Validacion de calidad | I | C | C | C | C | C | C | C | C | R | I |
+| Documentacion final | I | C | C | C | C | C | C | C | C | C | R |
 
 Leyenda: R = responsable principal, C = consultado, I = informado.
 
 ## Version
 
-Ultima actualizacion: 2026-07-14  
-Version: 2.0
+Ultima actualizacion: 2026-07-20
+Version: 2.1
