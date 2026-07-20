@@ -134,3 +134,26 @@ Resultado observado:
 - API/contratos: ampliar `ContentBlockSettings` con campos estructurados para layouts, temas, acciones, pasos, FAQs y texto enriquecido seguro.
 - CMS: agregar plantilla `Agencia digital / Hostlyc`, controles visibles para ocultar imagen/metricas, cambiar CTA secundaria, editar color por seccion y gestionar modales/acciones.
 - Tester: continuar prueba manual desde CMS y registrar cada accion imposible o confusa en este mismo formato.
+
+## Cierre parcial del entregable 1
+
+Fecha: 2026-07-20.
+
+Se corrigio la base tecnica que bloqueaba la clonacion comercial:
+
+- Renderer publico separado de vista espejo CMS.
+- Contratos/API preservan settings para variantes comerciales.
+- Landing Hostlyc renderiza hero centrado, servicios claros, proyectos, nosotros,
+  proceso, FAQ, contacto y footer sin textos de laboratorio.
+- Se eliminaron textos internos visibles: `tester`, `referencia publica`,
+  `Clone Test`, `Laboratorio profesional`, `Solicitar analisis`,
+  `Ver acreditaciones`, `Areas de analisis` y lista de laboratorio del footer.
+- Capturas finales:
+  - `logs/screenshots/hostlyc-clone-test/landing-hostlyc-deliverable-1-final2-desktop.png`.
+  - `logs/screenshots/hostlyc-clone-test/landing-hostlyc-deliverable-1-final2-mobile.png`.
+
+Pendiente para la siguiente prueba manual:
+
+- Los controles CMS todavia no exponen de forma humana todas las variantes
+  nuevas. El usuario puede publicar la plantilla, pero no todos los ajustes se
+  pueden modificar sin tocar campos tecnicos o convenciones en `settings`.

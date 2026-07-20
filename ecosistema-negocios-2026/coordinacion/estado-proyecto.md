@@ -43,6 +43,7 @@
 - Validación 2026-07-17: reporte de auditoría SMTP enviado realmente a `irving.condem@gmail.com`. Antes del envío se generó preview local en `logs/audit-reports`, agente backend/security aprobó CSV/HTML sin secretos, y Gmail SMTP respondió `250 OK`. Vista espejo corrigió paneles inline para que no usen `absolute/z-index` ni se encimen sobre otros controles.
 - Validación 2026-07-20: prueba real `Hostlyc Clone Test`. Se creó `repos/landing-hostlyc`, se provisionó tenant `hostlyc-clon`, se levantó landing en `3101`, CMS en `4200` y API en `3000`. El renderer compartido se corrigió para separar modo público de `cms-preview`; el público ya no muestra `Vista previa publicada`, `Editar servicios` ni controles editoriales. Builds ejecutados: `repos/site-renderer npm run check/build`, `repos/cms npm run build`, `repos/landing npm run build`, `repos/landing-hostlyc npm run build`. Smoke API: `scripts/run-hostlyc-cms-smoke.mjs` generó 16 eventos de auditoría, 5 backups y reporte local `logs/audit-reports/auditoria-hostlyc-clon-2026-07-20T20-06-01-238Z.xlsx`. Capturas en `logs/screenshots/hostlyc-clone-test`.
 - Auditoría UX/UI 2026-07-20: no se puede clonar `https://hostlyc.com/` al 100% usando solo CMS todavía. Aunque CMS/API publican texto, media, menú, PDF y diseño, el renderer conserva composición y textos de laboratorio (`Laboratorio profesional`, `Solicitar análisis`, métricas flotantes, `Ver acreditaciones`). Se requiere generalizar contratos y renderer por variantes de sección.
+- Entregable 1 Hostlyc cerrado 2026-07-20: contratos compartidos documentan settings de variantes (`layout`, `variant`, `theme`, `richText`, `cards`, `steps`, `faq`, `cta`, `flags`), API prueba que los preserva en site mirror, y `@ecosistema/site-renderer` renderiza variantes comerciales para hero centrado, servicios claros, proyectos, nosotros, proceso, FAQ, contacto y footer. Hallazgos UX corregidos: se eliminaron textos internos de tester, copy de laboratorio/listas de laboratorio y se reforzo jerarquia del H1 con `clamp()`. Evidencia final: `logs/screenshots/hostlyc-clone-test/landing-hostlyc-deliverable-1-final2-desktop.png` y `landing-hostlyc-deliverable-1-final2-mobile.png`. HTML publico verificado sin `Clone Test`, `tester`, `referencia publica` ni textos de laboratorio.
 
 ## Decisiones aplicadas
 
@@ -90,6 +91,7 @@
 - Completar plantilla `Agencia digital / Hostlyc`: hero centrado sin imagen obligatoria, palabra destacada con color, mosaico de servicios, proceso, FAQ acordeón, CTA rojo, footer negro y textos comerciales sin claims de laboratorio.
 - Extender CMS/API para controlar `variant`, `theme`, `layout`, `richText`, `cards`, `steps`, `faqItems`, `ctaActions`, `showImage`, `showMetrics` y color por sección.
 - Agregar al provisioning una UI de negocio nuevo: nombre, slug, plantilla, usuario admin y URL de landing generada. Hoy existe script base, falta experiencia de un clic.
+- Ejecutar plan de entregables Hostlyc en `coordinacion/plan-trabajo-hostlyc-cms.md`; siguiente prioridad: controles CMS visibles para plantilla Hostlyc sin editar JSON.
 
 ## Bloqueos técnicos antes de integración real
 
