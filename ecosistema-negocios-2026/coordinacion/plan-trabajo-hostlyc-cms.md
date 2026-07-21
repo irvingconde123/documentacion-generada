@@ -51,37 +51,64 @@ Resultado 2026-07-20:
 
 ## Entregable 2 - Controles CMS visibles para plantilla Hostlyc
 
-Estado: siguiente.
+Estado: completado como primera version operable.
 
-Funciones faltantes:
+Alcance cerrado 2026-07-20:
 
-- Selector de plantilla por pagina: `Laboratorio`, `Agencia digital / Hostlyc`,
-  y despues otras industrias.
-- Controles por seccion:
-  - Variante visual.
-  - Tema claro/oscuro/color propio.
-  - Mostrar/ocultar imagen.
-  - Mostrar/ocultar metricas.
-  - CTA principal/secundario.
-  - Palabra destacada en titulo.
-  - Cards, pasos y FAQ editables sin escribir JSON.
-- Botones de accion:
-  - Enlace interno.
-  - URL externa.
-  - PDF descargable.
-  - Modal flotante.
-  - WhatsApp.
-- Panel de errores entendibles:
-  - "Falta texto del boton".
-  - "Este enlace no abre".
-  - "Esta imagen no se puede cargar".
+- CMS agrega una plantilla comercial tipo Hostlyc desde `Contenido del sitio`
+  y desde `Vista espejo`.
+- Se agregaron presets visibles por seccion:
+  - Inicio comercial.
+  - Servicios comerciales.
+  - Proyectos o casos.
+  - Acerca del negocio.
+  - Proceso de trabajo.
+  - Preguntas frecuentes.
+  - Contacto comercial.
+  - Pie de pagina comercial.
+- Cada preset crea `settings` compatibles con el renderer compartido:
+  `variant`, `layout`, `highlight`, `ctaLabel`, `secondaryCtaLabel`,
+  `itemCtaLabel`, `backgroundColor`, `items`, `images`, `subtitle`,
+  `note` y campos de navegacion del hero.
+- Las etiquetas del editor tradicional ahora explican formatos entendibles:
+  `Titulo | descripcion`, `Titulo | descripcion | etiqueta` y
+  `Pregunta | respuesta`.
+- Los paneles inline de Vista espejo ya no usan scroll interno con altura fija;
+  crecen en flujo normal para no quedar encima o detras de otras secciones.
+- Auditoria de diseño detecto controles de seccion cortados en el borde derecho;
+  se corrigieron alineandolos dentro del lienzo y agregando etiquetas accesibles
+  por seccion.
+- El texto de ayuda de Vista espejo ahora explica que `Subir`, `Bajar` y
+  `Quitar` mueven secciones completas.
+- Los controles de color ahora dicen `Color principal` y `Color de apoyo`.
+- Tester rechazo inicialmente por navegacion: al tocar `Vista espejo` podia
+  quedar en `Resumen`. Se corrigio con enlaces reales `?section=...`, lectura
+  server-side de la seccion inicial y menu nativo mobile `Ir a otra seccion`.
+- `@ecosistema/site-renderer` fue reconstruido y reinstalado en CMS.
 
 Criterios de aceptacion:
 
-- Tester puede modificar hero, servicios, proyectos, proceso, FAQ y contacto
-  sin abrir JSON.
-- Tester puede mover una seccion agregada por error al final.
-- Tester puede cambiar una palabra del titulo a rojo desde CMS.
+- Cumplido parcialmente: tester puede agregar plantilla comercial, mover
+  secciones, editar textos, listas, colores globales, imagenes, menu y publicar
+  sin tocar JSON.
+- Pendiente fino: cambiar el color de una sola palabra arbitraria desde CMS
+  aun depende de `highlight`; falta selector visual por fragmento de texto.
+- Pendiente fino: acciones avanzadas por boton (`modal`, WhatsApp y validacion
+  visible de enlace roto) pasan al entregable 4.
+
+Validacion:
+
+- `repos/site-renderer`: `npm run check`, `npm run build`, `npm pack`.
+- `repos/cms`: `npm run lint`, `npm run build`.
+- Playwright local en CMS `4200`, negocio `Hostlyc Clone Test`, Vista espejo:
+  - `logs/screenshots/cms-commercial-controls/desktop-mirror-commercial-controls-hostlyc-fixed.png`.
+  - `logs/screenshots/cms-commercial-controls/mobile-mirror-commercial-controls-hostlyc-fixed.png`.
+  - `logs/screenshots/cms-commercial-controls/direct-section-mirror-2026-07-21.png`.
+  - `logs/screenshots/cms-commercial-controls/sidebar-section-mirror-2026-07-21.png`.
+  - `logs/screenshots/cms-commercial-controls/mobile-section-mirror-native-menu-2026-07-21.png`.
+- Resultado automatico: aparece `Plantilla comercial tipo Hostlyc`, aparece
+  `Aplicar plantilla comercial`, aparece `Color principal`, URL directa y menu
+  mobile abren Vista espejo, sin overflow horizontal en mobile.
 
 ## Entregable 3 - Provisioning de negocio nuevo en un clic
 
