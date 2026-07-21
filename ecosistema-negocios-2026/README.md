@@ -1,27 +1,55 @@
-# Ecosistema Negocios 2026
+# Coordinacion del ecosistema
 
-Documentacion publica y de continuidad del proyecto `ecosistema-negocios-2026`.
+## Proposito
 
-## Por donde empezar
+Registrar el estado real de los repos creados en esta carpeta y mantener la coordinacion de Sprint 0.
 
-1. `coordinacion/continuidad-operativa.md`: como levantar servicios, variables,
-   pruebas y flujo esperado.
-2. `coordinacion/estado-proyecto.md`: estado real, avances y pendientes.
-3. `coordinacion/contratos-agentes.md`: responsabilidades por agente y estado de
-   contratos.
-4. `coordinacion/plan-pruebas-integracion.md`: pruebas de integracion,
-   seguridad, estres e inyeccion SQL.
+## Repos locales
 
-## Repos de codigo relacionados
+- `repos/shared-contracts`
+- `repos/api`
+- `repos/cms`
+- `repos/landing`
+- `repos/sistema-hibrido`
 
-- `ecosistema-shared-contracts`
-- `ecosistema-api`
-- `ecosistema-cms`
-- `ecosistema-landing`
-- `ecosistema-sistema-hibrido`
+## Repos remotos
 
-## Regla de continuidad
+- `https://github.com/irvingconde123/ecosistema-shared-contracts`
+- `https://github.com/irvingconde123/ecosistema-api`
+- `https://github.com/irvingconde123/ecosistema-cms`
+- `https://github.com/irvingconde123/ecosistema-landing`
+- `https://github.com/irvingconde123/ecosistema-sistema-hibrido`
 
-Cada cambio relevante debe actualizar primero la documentacion del repo afectado
-y despues esta carpeta documental para que otro chat o agente pueda retomar sin
-depender del historial conversacional.
+## Primer entregable funcional
+
+API, CMS y landing conectados por contratos compartidos.
+
+## Documentos de coordinacion
+
+- `coordinacion/contratos-agentes.md`: responsables, fronteras y estado de contratos compartidos.
+- `coordinacion/estado-proyecto.md`: estado real, metas inmediatas, validaciones y pendientes.
+- `coordinacion/continuidad-operativa.md`: guia para retomar el trabajo en otro chat con variables, servidores, pruebas y pendientes inmediatos.
+- `coordinacion/plan-pruebas-integracion.md`: plan transversal para cifrado, estres, penetracion, inyeccion SQL y validacion de contratos.
+
+## Regla permanente de diseno
+
+Todo cambio de frontend debe pasar por auditoria UX/UI antes de darse por terminado. El diseñador debe revisar capturas o ejecucion local, validar que la interfaz sea clara para personas no tecnicas, y reportar hallazgos de navegacion, espaciado, color, jerarquia, formularios y texto. Si hay hallazgos bloqueantes, el agente responsable corrige y se repite la auditoria.
+
+## Agentes por proyecto
+
+- Agente 1 - API y core: `repos/api`.
+- Agente 2 - CMS: `repos/cms`.
+- Agente 3 - Landing: `repos/landing`.
+- Agente 4 - Sistema hibrido: `repos/sistema-hibrido`.
+- Agente 5 - Contratos y coordinacion: `repos/shared-contracts` y `coordinacion`.
+
+La fuente detallada de responsabilidades y contratos esta en `coordinacion/contratos-agentes.md`.
+
+## Comandos principales
+
+```bash
+cd repos/api && npm run start:dev
+cd repos/cms && npm run dev -- -p 3001
+cd repos/landing && npm run dev -- -p 3002
+cd repos/sistema-hibrido && npm run dev
+```
