@@ -141,7 +141,7 @@ Criterios de aceptacion:
 
 ## Entregable 3.5 - Editor del sitio unificado
 
-Estado: definido por auditoria UX/tester 2026-07-26.
+Estado: primera version implementada 2026-07-26.
 
 Objetivo:
 
@@ -171,6 +171,37 @@ Alcance:
   - Seleccionar imagen/PDF desde Media.
   - Editar SEO y redes de la pagina.
 
+Resultado 2026-07-26:
+
+- Se implemento `Mi sitio` como pestaña unificada en CMS.
+- La navegación lateral quedó reducida a:
+  - `Resumen`
+  - `Mi sitio`
+  - `Biblioteca`
+  - `Usuarios`
+  - `Mi cuenta`
+  - `Auditoría`
+- Barra superior de contexto:
+  - `Estas editando`
+  - `URL publicada`
+  - `Copiar URL`
+  - `Abrir pagina publicada`
+  - `Guardar sin publicar` visible, bloqueado hasta versionado draft/publish
+  - `Publicar cambios en mi sitio`
+- Panel izquierdo:
+  - Paginas
+  - URL de pagina
+  - Menu con `Subir`, `Bajar`, `Visible`, `Probar enlace` y `Quitar`
+- Centro:
+  - Vista espejo editable con renderer compartido
+- Panel derecho:
+  - Ajustes de pagina
+  - SEO y redes
+  - Colores y marca
+  - Secciones
+- Se agrego soporte para duplicar y ocultar secciones.
+- `Ocultar` se respeta en `@ecosistema/site-renderer`, por lo que aplica tambien en landing.
+
 Criterios de aceptacion:
 
 - Un usuario puede crear pagina, agregarla al menu, editar contenido, mover secciones, elegir layout, ajustar SEO y abrir la URL publicada desde una sola pestaña.
@@ -178,6 +209,17 @@ Criterios de aceptacion:
 - Mobile sin scroll horizontal.
 - Cambiar pagina no pierde cambios sin guardar.
 - Links/PDF pueden probarse antes de publicar.
+
+Validacion:
+
+- `repos/site-renderer`: `npm run check`, `npm run build`, `npm pack`.
+- `repos/cms`: `npm run lint`, `npm run build`.
+- `repos/landing`: `npm run lint`, `npm run build`.
+- Playwright CMS `4300`: validado en `1366x768`, `1280x720` y `390x844`, sin overflow horizontal.
+- Capturas:
+  - `logs/screenshots/cms-unified-editor/desktop-1366-site-editor-final.png`
+  - `logs/screenshots/cms-unified-editor/desktop-1280-site-editor-final.png`
+  - `logs/screenshots/cms-unified-editor/mobile-390-site-editor-final.png`
 
 Reporte base:
 
