@@ -139,6 +139,50 @@ Criterios de aceptacion:
 - Con un nombre y plantilla se obtiene tenant listo en CMS y landing local.
 - Auditoria registra alta de negocio y usuario admin.
 
+## Entregable 3.5 - Editor del sitio unificado
+
+Estado: definido por auditoria UX/tester 2026-07-26.
+
+Objetivo:
+
+- Juntar en una sola pestaña las herramientas que modifican paginas publicas del CMS.
+- Evitar que un usuario no tecnico tenga que saltar entre `Paginas y menu`, `Contenido del sitio`, `Vista espejo`, `Estilos` y `SEO`.
+
+Alcance:
+
+- Nueva pestaña `Editor del sitio` o `Mi sitio`.
+- Barra superior con:
+  - `Estas editando: {pagina}`.
+  - `URL publicada: {url}`.
+  - `Abrir pagina publicada`.
+  - `Copiar URL`.
+  - `Guardar cambios sin publicar`.
+  - `Publicar cambios en mi sitio`.
+- Panel de paginas y menu:
+  - Crear pagina.
+  - Cambiar URL/slug.
+  - Agregar/quitar del menu.
+  - Reordenar enlaces del menu.
+- Vista espejo como zona principal.
+- Panel contextual para:
+  - Editar textos.
+  - Mover/duplicar/ocultar/eliminar secciones.
+  - Cambiar layout: texto izquierda/imagen derecha, imagen izquierda/texto derecha, texto centrado, solo texto.
+  - Seleccionar imagen/PDF desde Media.
+  - Editar SEO y redes de la pagina.
+
+Criterios de aceptacion:
+
+- Un usuario puede crear pagina, agregarla al menu, editar contenido, mover secciones, elegir layout, ajustar SEO y abrir la URL publicada desde una sola pestaña.
+- La URL publica de la pagina actual siempre esta visible o a un click.
+- Mobile sin scroll horizontal.
+- Cambiar pagina no pierde cambios sin guardar.
+- Links/PDF pueden probarse antes de publicar.
+
+Reporte base:
+
+- `coordinacion/reportes-tester/cms-editor-unificado-2026-07-26.md`.
+
 ## Entregable 4 - Media real y acciones avanzadas
 
 Estado: en progreso como base tecnica de storage dinamico.
