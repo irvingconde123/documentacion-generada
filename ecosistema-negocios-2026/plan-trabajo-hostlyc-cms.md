@@ -220,6 +220,18 @@ Validacion:
   - `logs/screenshots/cms-unified-editor/desktop-1366-site-editor-final.png`
   - `logs/screenshots/cms-unified-editor/desktop-1280-site-editor-final.png`
   - `logs/screenshots/cms-unified-editor/mobile-390-site-editor-final.png`
+- Correccion posterior 2026-07-26:
+  - Se corrigio warning de hidratacion al seleccionar `Hostlyc Clone Test`.
+  - Causa tratada: fecha de `Ultima actualizacion` se formateaba en componente cliente y podia diferir entre SSR y navegador.
+  - Solucion: formatear en servidor con zona horaria fija y pasar texto estable al CMS.
+  - Validacion: `repos/cms npm run lint`, `repos/cms npm run build` y Playwright limpio en `http://localhost:4300`.
+  - Captura: `logs/screenshots/cms-login-hostlyc-localhost-summary-after-hydration-fix.png`.
+- Ajuste UX posterior 2026-07-26:
+  - Se compacto la barra superior de `Mi sitio` porque en mobile ocupaba demasiada altura.
+  - Ahora quedan visibles pagina actual y `Publicar cambios`; enlace, copiar, abrir pagina y `Guardar sin publicar` se agrupan en `Enlace y opciones`.
+  - En mobile la barra ya no queda fija, para no tapar el editor durante scroll.
+  - Validacion: Playwright desktop `1366x768` y mobile `390x844`, sin overflow horizontal ni errores de consola.
+  - Capturas: `logs/screenshots/cms-unified-editor/desktop-1366-compact-link-options.png` y `logs/screenshots/cms-unified-editor/mobile-390-compact-link-options.png`.
 
 Reporte base:
 
