@@ -2,10 +2,72 @@
 
 ## Estado actual
 
-- Implementado: carpeta de trabajo, contratos compartidos, contratos de sync batch/outbox/idempotencia/cifrado/sesión híbrida/DTOs operativos, API base, módulo API `sync/offline`, API pública `site` y páginas por slug, persistencia PostgreSQL/Neon para el espejo CMS usando `DATABASE_URL`, endpoints API reales para Mi cuenta, Usuarios y Media por URL/metadatos con validación runtime de `requestedByUserId`/rol/tenant, SMTP real para reportes de auditoría con adjunto CSV, guía Gmail SMTP, rama Neon `production_ecosistemaNegocio`, CMS con login local, selector de negocio, shell lateral izquierda desplegable con iconos y scroll responsive, edición visual de bloques con alta/baja/reordenamiento, editor de diseño separado, SEO básico por página, páginas/menú/vista espejo conectados a API, menú con páginas internas/URL externa/PDF descargable, selector de Media para enlaces descargables, presets de laboratorio, reportes de auditoría simulados o SMTP según variables, alertas temporales, Mi cuenta editable, gestión local de usuarios por correo único e inmutable, contraseña temporal en modo prueba local, biblioteca Media por URL o archivo local pequeño `data:` como fallback, Vista espejo visual tipo landing con preview arriba en móvil y marco escalado en escritorio, edición inline desde Vista espejo para textos, listas, colores, imagen principal/galería, mover y quitar secciones, CMS leyendo el mismo espejo `/site` que la landing, landing renderizando menú, páginas, hero, servicios, texto, galería/imágenes, métricas, organismos, misión, acreditaciones, CTA, footer, contacto y metadata SEO desde API, orden de secciones publicado por CMS, repositorios remotos de documentación creados en GitHub, y sistema híbrido web inicial con Vite/Ionic React, Capacitor/Electron base y modo offline forzado visible.
+- Implementado: carpeta de trabajo, contratos compartidos, contratos de sync batch/outbox/idempotencia/cifrado/sesión híbrida/DTOs operativos, API base, módulo API `sync/offline`, API pública `site` y páginas por slug, persistencia PostgreSQL/Neon para el espejo CMS usando `DATABASE_URL`, endpoints API reales para Mi cuenta, Usuarios y Media por URL/metadatos con validación runtime de `requestedByUserId`/rol/tenant, base dinámica de storage Media con estado/preparación de upload para `disabled`/S3/Firebase/custom, SMTP real para reportes de auditoría con adjunto CSV, guía Gmail SMTP, rama Neon `production_ecosistemaNegocio`, CMS con login local, selector de negocio, shell lateral izquierda desplegable con iconos y scroll responsive, edición visual de bloques con alta/baja/reordenamiento, editor de diseño separado, SEO básico por página, páginas/menú/vista espejo conectados a API, menú con páginas internas/URL externa/PDF descargable, selector de Media para enlaces descargables, presets de laboratorio, reportes de auditoría simulados o SMTP según variables, alertas temporales, Mi cuenta editable, gestión local de usuarios por correo único e inmutable, contraseña temporal en modo prueba local, biblioteca Media por URL o archivo local pequeño `data:` como fallback, Vista espejo visual tipo landing con preview arriba en móvil y marco escalado en escritorio, edición inline desde Vista espejo para textos, listas, colores, imagen principal/galería, mover y quitar secciones, CMS leyendo el mismo espejo `/site` que la landing, landing renderizando menú, páginas, hero, servicios, texto, galería/imágenes, métricas, organismos, misión, acreditaciones, CTA, footer, contacto y metadata SEO desde API, orden de secciones publicado por CMS, repositorios remotos de documentación creados en GitHub, y sistema híbrido web inicial con Vite/Ionic React, Capacitor/Electron base y modo offline forzado visible.
 - En progreso: integración de auth/login real, SMTP real para temporales, refinamiento UX del CMS y sistema híbrido, adopción runtime de contratos nuevos por sistema híbrido, plan transversal de pruebas de integracion y versionado draft/publish.
-- Pendiente: SMTP real para contrasenas temporales, adjunto XLSX opcional para auditoria, publicación versionada draft/publish, upload real de Media con storage binario, cache incremental, query executor contextual, outbox real, idempotencia runtime, persistencia local y empaquetado nativo.
+- Pendiente: SMTP real para contrasenas temporales, adjunto XLSX opcional para auditoria, publicación versionada draft/publish, adaptadores reales de Media para S3/Firebase/custom, upload binario desde CMS contra proveedor configurado, cache incremental, query executor contextual, outbox real, idempotencia runtime, persistencia local y empaquetado nativo.
 - Bloqueado: sync real y publicación productiva quedan bloqueados hasta cerrar contratos de cifrado, auth/permisos runtime, outbox/idempotencia y validación de payloads.
+
+## Hostlyc Sprint 1 - Corte Vertical
+
+Estado 2026-07-27:
+
+- Implementado: `hostlyc-vpc-front`, `hostlyc-api-back` y
+  `hostlyc-data-access` como repositorios independientes y arquitectura
+  hexagonal.
+- Validado: 41 pruebas de repositorio y smoke integrado de 10 checks.
+- Publicado: repos privados con `master`, `release`, `develop`,
+  `feat/s1-foundation` y PR draft #1 hacia `develop`.
+- Completado: JWT/permisos en VPC, firma HMAC entre servicios,
+  `StoreRepositoryPort`, provisioning idempotente `prv_<ULID>`, catalogo
+  allowlisted, SQL en archivos y adaptadores memory/PostgreSQL.
+- Pendiente: PostgreSQL real, replay store, rate limit distribuido, route
+  catalog persistido, outbox/worker y entitlements.
+- Evidencia: `coordinacion/sprints/hostlyc-sprint-1/evidencias.md`.
+
+## Hostlyc Sprint 2 - Seguridad, Neon Y CMS
+
+Estado 2026-07-27:
+
+- Implementado: ramas `hostlyc_reestructuracion`, soporte seguro de
+  `DATABASE_URL`, runner de migraciones con checksum y HMAC v2.
+- Validado: conexion, migracion y smoke integrado contra Neon; diez requests
+  concurrentes produjeron una fila y el fixture se elimino.
+- Corregido: caller, actor y permisos ya forman parte de la firma interna.
+- Decidido: VPC es ingress unico; API Back es autoridad de Identity/tenant;
+  `repos/api` se reutiliza solo como servicio interno por `CmsContentPort`.
+- Auditada: la cookie Base64, passwords locales, actores en payload, tenant
+  sintetico y fallback demo no son compatibles con produccion.
+- Pendiente: IAM, memberships, roles, permisos, entitlements, tenant canonico,
+  adaptador de contenido, draft/publish, replay store y CMS BFF seguro.
+- Evidencia: `coordinacion/sprints/hostlyc-sprint-2/evidencias.md`.
+
+### Corte De Correo De Invitaciones
+
+- Implementado: SMTP real detras de `InvitationDeliveryPort`, plantilla Hostlyc
+  texto/HTML, envio y reenvio, y ruta de canje en el front padre.
+- Validado: crear, reenviar y revocar por VPC con correos reales; 26 eventos
+  exitosos por corrida entre VPC, API Back y Data Access.
+- Seguridad: el canje exige sesion del correo destino, es de un uso, expira y
+  no expone API Back. `tokenHash` queda redactado en auditoria.
+- Calidad: API Back 76 pruebas, Data Access 86 y front padre 39; builds y limite
+  de 300 lineas aprobados.
+- Pendiente: outbox/reintentos del proveedor y gestion visual conectada desde
+  el CMS.
+
+### Corte CMS Hostlyc E Hidratacion
+
+Estado 2026-07-28:
+
+- Corregido: la cuenta del propietario autentica por VPC y administra el
+  negocio canónico Hostlyc con membresia `owner`.
+- Corregido: el CMS aprovisiona workspaces por `tenantSlug` y no mezcla el
+  contenido demo de otro tenant.
+- Implementado: `hostlyc-parent-web -> VPC -> API Back -> CMS` para contenido
+  estructurado, sin HTML ejecutable.
+- Validado: cambio editorial visible en `4400` sin redespliegue y fallback
+  local al detener CMS.
+- Evidencia:
+  `coordinacion/reportes-tester/e2e-cms-hostlyc-hidratacion-2026-07-28.md`.
 
 ## Agentes activos
 
@@ -40,6 +102,11 @@
 - Validación 2026-07-17: Vista espejo inline validada con CMS `4200`, API `3000` y landing `3100`; capturas en `logs/screenshots/cms-inline-mirror`. Resultado: 18 textos editables, 2 controles de color, controles de imagen/listas, botones de subir/bajar/quitar, publicación confirmada, landing visible y sin overflow horizontal móvil.
 - Validación 2026-07-17: renderer compartido y editor humano de listas validados con `npm run lint/build` en CMS y landing; capturas en `logs/screenshots/cms-shared-renderer`. Resultado: `@ecosistema/site-renderer` alimenta CMS Vista espejo y landing, el editor tradicional queda colapsable, y acreditaciones/listas se editan por tarjetas con campos separados.
 - Validación 2026-07-17: API/CMS admin reforzados con permisos runtime y SMTP de auditoría. Comandos: `repos/api npm run build`, `npm test -- --runInBand`, `npm run test:e2e -- --runInBand`, `repos/cms npm run lint`, `npm run build`. Resultado: API exige actor activo por tenant/rol; CMS manda `requestedByUserId`; Media acepta URL pública o archivo local pequeño como fallback documentado.
+- Validación 2026-07-21: base dinámica de storage Media. Contratos compartidos agregan tipos `CmsStorage*`, modo `not_implemented` y metadata opcional en `CmsMediaItem`; API expone `GET /v1/cms/:tenantSlug/storage/status` y `POST /v1/cms/:tenantSlug/storage/uploads`; CMS muestra estado de almacenamiento en Media y diferencia `Enlace público` de `Solo en este CMS`. Agentes UX/UI e integrador marcaron como bloqueante no devolver URLs placeholder; se corrigió para que S3/Firebase/custom no respondan `ready` hasta tener adaptador real. Comandos: `repos/shared-contracts npm run check/build`, `repos/api npm run build`, `npm test -- --runInBand`, `npm run test:e2e -- --runInBand`, `repos/cms npm run lint/build`. Playwright CMS `4200` validó Media sin overflow horizontal desktop/mobile; capturas en `logs/screenshots/cms-storage/cms-media-storage-dynamic-desktop-fixed.png` y `cms-media-storage-dynamic-mobile-fixed.png`. Documento operativo: `coordinacion/storage-media.md`.
+- Auditoria UX/tester 2026-07-26: antes de continuar storage, diseñador y tester auditaron CMS pestaña por pestaña. Acuerdo: crear una pestaña principal `Editor del sitio` o `Mi sitio` para agrupar páginas, menú, vista espejo, secciones, estilos, SEO, links/PDF e imágenes usadas por la página. Mantener separadas `Mi cuenta`, `Usuarios`, `Auditoria` y `Biblioteca de archivos`. Debe mostrar siempre `Estas editando`, URL pública, `Abrir página publicada` y `Copiar URL`. Reporte: `coordinacion/reportes-tester/cms-editor-unificado-2026-07-26.md`.
+- Implementación CMS 2026-07-26: entregable `Mi sitio` unificado aplicado. La navegación lateral quedó reducida a `Resumen`, `Mi sitio`, `Biblioteca`, `Usuarios`, `Mi cuenta` y `Auditoría`. `Mi sitio` agrupa páginas, menú, URL pública, acciones `Copiar URL`/`Abrir página publicada`, vista espejo, ajustes de página, SEO, marca/colores y secciones. Se agregó reordenamiento del menú, duplicar/ocultar/eliminar secciones y selector humano de acomodo como `Texto izquierda, imagen derecha`. `Ocultar` se volvió real en `@ecosistema/site-renderer`, por lo que aplica en CMS y landing. `Guardar sin publicar` queda visible pero bloqueado hasta implementar versionado borrador/publicado.
+- Corrección CMS 2026-07-26: al hacer login y seleccionar `Hostlyc Clone Test`, React/Next podía mostrar warning de hidratación en modo dev. Se movió el formateo de `Última actualización` al Server Component con zona horaria fija `America/Mexico_City`, evitando recalcular `Intl.DateTimeFormat` dentro del componente cliente durante hidratación. Validado con `repos/cms npm run lint/build` y Playwright limpio en `http://localhost:4300/login -> /systems -> Hostlyc Clone Test`; captura en `logs/screenshots/cms-login-hostlyc-localhost-summary-after-hydration-fix.png`.
+- Ajuste UX CMS 2026-07-26: la barra de `Mi sitio` se compactó porque en mobile ocupaba demasiada pantalla. Ahora muestra pagina actual y `Publicar cambios`; enlace publicado, copiar, abrir pagina y `Guardar sin publicar` viven en el desplegable `Enlace y opciones`. Validado con Playwright desktop/mobile sin overflow horizontal ni errores de consola; capturas en `logs/screenshots/cms-unified-editor/desktop-1366-compact-link-options.png` y `logs/screenshots/cms-unified-editor/mobile-390-compact-link-options.png`.
 - Validación 2026-07-17: reporte de auditoría SMTP enviado realmente a `irving.condem@gmail.com`. Antes del envío se generó preview local en `logs/audit-reports`, agente backend/security aprobó CSV/HTML sin secretos, y Gmail SMTP respondió `250 OK`. Vista espejo corrigió paneles inline para que no usen `absolute/z-index` ni se encimen sobre otros controles.
 - Validación 2026-07-20: prueba real `Hostlyc Clone Test`. Se creó `repos/landing-hostlyc`, se provisionó tenant `hostlyc-clon`, se levantó landing en `3101`, CMS en `4200` y API en `3000`. El renderer compartido se corrigió para separar modo público de `cms-preview`; el público ya no muestra `Vista previa publicada`, `Editar servicios` ni controles editoriales. Builds ejecutados: `repos/site-renderer npm run check/build`, `repos/cms npm run build`, `repos/landing npm run build`, `repos/landing-hostlyc npm run build`. Smoke API: `scripts/run-hostlyc-cms-smoke.mjs` generó 16 eventos de auditoría, 5 backups y reporte local `logs/audit-reports/auditoria-hostlyc-clon-2026-07-20T20-06-01-238Z.xlsx`. Capturas en `logs/screenshots/hostlyc-clone-test`.
 - Auditoría UX/UI 2026-07-20: no se puede clonar `https://hostlyc.com/` al 100% usando solo CMS todavía. Aunque CMS/API publican texto, media, menú, PDF y diseño, el renderer conserva composición y textos de laboratorio (`Laboratorio profesional`, `Solicitar análisis`, métricas flotantes, `Ver acreditaciones`). Se requiere generalizar contratos y renderer por variantes de sección.
@@ -87,11 +154,14 @@
 - Definir tokens visuales globales para primario, éxito, advertencia, error, bordes y texto secundario.
 - Agregar estados vacíos/error en selección de negocio y flujos de auditoría.
 - Convertir Media por URL/metadatos en carga real de archivos con selector reutilizable en hero, galería, SEO y perfil.
+- Implementar adaptadores reales de storage Media (`S3StorageProvider`, `FirebaseStorageProvider`, `CustomStorageProvider`) y conectar el formulario CMS para subir cuando `storage/status.enabled=true`.
 - Publicar `@ecosistema/site-renderer` como paquete interno versionado en vez de depender de tarball local.
 - Revisar claims comerciales/regulatorios antes de publicar sitios reales: porcentajes, volumen anual, acreditaciones y aceptación por autoridades requieren evidencia.
 - Mejorar todavía más el editor espejo para modificar columnas/posiciones finas del layout sin depender de convenciones en `settings`.
 - Refinar plantilla `Agencia digital / Hostlyc`: cambiar color de fragmentos arbitrarios de texto desde CMS, no solo mediante `highlight`.
 - Extender CMS/API para controlar `theme`, `richText`, `cards`, `steps`, `faqItems`, `ctaActions`, `showImage`, `showMetrics`, modales, WhatsApp y validacion visible de enlaces rotos.
+- Crear `Editor del sitio` unificado: páginas, menú, vista espejo, secciones, estilos, SEO y links de la página en una sola experiencia con URL pública visible y botones `Abrir página publicada`/`Copiar URL`.
+- Separar publicación versionada: activar `Guardar sin publicar` y mantener `Publicar cambios en mi sitio` como acción distinta. Hoy el botón se muestra bloqueado para no prometer borradores inexistentes.
 - Agregar al provisioning una UI de negocio nuevo: nombre, slug, plantilla, usuario admin y URL de landing generada. Hoy existe script base, falta experiencia de un clic.
 - Ejecutar plan de entregables Hostlyc en `coordinacion/plan-trabajo-hostlyc-cms.md`; siguiente prioridad: provisioning de negocio nuevo en un clic y acciones avanzadas de Media/botones.
 
