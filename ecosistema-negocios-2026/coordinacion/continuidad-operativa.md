@@ -19,6 +19,66 @@ desde CMS, persistido en Neon y renderizado por la landing.
 - Contratos: `repos/shared-contracts`
 - Renderer visual compartido: `repos/site-renderer`
 - Coordinacion: `coordinacion`
+- VPC Front Hostlyc: `hostlyc/hostlyc-vpc-front`
+- API Back Hostlyc: `hostlyc/hostlyc-api-back`
+- Data Access Hostlyc: `hostlyc/hostlyc-data-access`
+
+## Hostlyc Sprint 1
+
+El corte vertical nuevo vive separado del ecosistema anterior:
+
+```text
+POST /pagos/nueva_tienda
+  -> VPC Front :4100
+  -> API Back :4200
+  -> Data Access :4300
+```
+
+Comandos de validacion:
+
+```powershell
+cd hostlyc/hostlyc-vpc-front
+npm ci
+npm run quality
+
+cd ../hostlyc-api-back
+npm ci
+npm run quality
+
+cd ../hostlyc-data-access
+npm ci
+npm run quality
+npm run test:e2e
+```
+
+La evidencia, contratos y pendientes estan en
+`coordinacion/sprints/hostlyc-sprint-1/`. No copiar secretos de los scripts
+locales de smoke a `.env.example` ni GitHub.
+
+## Hostlyc Sprint 2
+
+Rama de trabajo en los repos involucrados:
+
+```text
+hostlyc_reestructuracion
+```
+
+Fuente de verdad:
+`coordinacion/sprints/hostlyc-sprint-2/`.
+
+Estado al 2026-07-27:
+
+- Data Access acepta `DATABASE_URL` o URL por catalogo.
+- La migracion versionada fue aplicada y verificada en Neon.
+- El smoke VPC -> Back -> Data Access -> Neon paso; el fixture fue eliminado.
+- HMAC v2 firma tambien caller, actor y permisos.
+- La API CMS existente se reutilizara solo como servicio interno de contenido.
+- Identity, tenant canonico, permisos y entitlements viviran en API Back.
+- CMS, landings y producto padre deben consumir solamente VPC.
+
+La URL Neon real vive en `hostlyc/hostlyc-data-access/.env`, ignorado por Git.
+No copiarla a docs, commits, logs ni variables `NEXT_PUBLIC_*`. Como fue
+compartida por chat, debe rotarse antes de un entorno compartido.
 
 ## Base de datos
 
@@ -71,6 +131,9 @@ Puertos:
 
 - Correo: `irving.condem@gmail.com`
 - Password local seed: revisar `repos/cms/src/lib/session.ts`.
+
+Este acceso es legado de desarrollo y no debe promoverse. Sprint 2 lo reemplaza
+por Identity compartido y una sesion opaca segura.
 
 ## Flujo que debe seguir funcionando
 
@@ -148,10 +211,14 @@ Para frontend, tomar capturas al menos en:
 
 ## Pendientes inmediatos
 
-1. Completar publicacion versionada: borrador vs publicado.
-2. Completar SMTP para contrasenas temporales y sumar storage binario para Media.
-3. Publicar `@ecosistema/site-renderer` como paquete interno versionado en vez de tarball local.
-4. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime. Hoy las mutaciones administrativas usan `requestedByUserId` y validacion de rol contra usuarios persistidos.
+1. Implementar Identity, sesiones, memberships, permisos y entitlements en API Back.
+2. Resolver slug/dominio a provisioning ID sin fallback demo.
+3. Crear `CmsContentPort` y adaptar `repos/api` como servicio interno firmado.
+4. Sustituir cookie Base64 y usuarios locales del CMS por VPC/Identity.
+5. Completar publicacion versionada: borrador vs publicado.
+6. Completar SMTP para contrasenas temporales y sumar storage binario para Media.
+7. Publicar `@ecosistema/site-renderer` como paquete interno versionado en vez de tarball local.
+8. Endurecer endpoints CMS: auth/guards, permisos y validacion runtime.
 5. Ajustar editor espejo para posicionamiento fino sin depender de convenciones
    en `settings`.
 6. Automatizar pruebas de integracion, seguridad, SQL injection y estres.
@@ -159,6 +226,37 @@ Para frontend, tomar capturas al menos en:
    posicionamiento de paneles flotantes cuando el preview esta angosto.
 8. Continuar prueba `Hostlyc Clone Test`: el tenant `hostlyc-clon` ya existe, la landing local vive en `repos/landing-hostlyc` y el script `scripts/run-hostlyc-cms-smoke.mjs` genera movimientos reales. Falta implementar plantilla/contrato de agencia digital para clonar `https://hostlyc.com/` sin hardcodes de laboratorio.
 9. Generalizar `@ecosistema/site-renderer`: separar textos/claims de laboratorio de la salida pública, permitir variantes por sección y texto enriquecido seguro para highlights dentro de H1.
+
+## Reanudacion Hostlyc 2026-07-28
+
+Estado funcional:
+
+- APIs nuevas: `4100`, `4200`, `4300`.
+- Front padre: `4400`.
+- CMS: `4500`.
+- Legacy: `3000`, `4600`, `4601`, `4700`.
+- Rama: `hostlyc_reestructuracion`.
+- Neon tiene migraciones `001` a `007`.
+- Front padre usa documento CMS publicado; API CMS legacy queda como fallback.
+- CMS permite borrador/publicacion central del producto padre.
+- Tiendas publicadas de prueba:
+  `tienda-invitaciones-ms40llyy-7w7sqnbe` y
+  `taller-verde-e2e-dzf9rc85`.
+
+Para retomar, leer primero:
+
+1. `coordinacion/entregables/sprint-2/reporte-personalizacion-cms-tiendas-2026-07-28.md`.
+2. `coordinacion/sprints/hostlyc-sprint-2/evidencias.md`.
+3. `coordinacion/sprints/hostlyc-sprint-2/backlog.md`.
+4. `coordinacion/reportes-tester/personalizacion-cms-tiendas-2026-07-28.md`.
+
+Siguiente lote:
+
+1. Draft central e historial visible para tiendas.
+2. Storage binario y selector Media.
+3. Adaptador Stripe y webhooks.
+4. Notificacion de contactos por correo.
+5. Redis productivo cuando exista infraestructura.
 
 ## Evidencia reciente
 

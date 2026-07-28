@@ -168,7 +168,8 @@ Estado 2026-07-28:
 
 ## Pendientes de alcance CMS
 
-- Separar guardar borrador de publicar cuando exista versionado en API.
+- Mostrar historial y rollback del producto padre; borrador/publicacion central
+  ya estan implementados.
 - Permitir ocultar bloques desde la UI; agregar, eliminar y reordenar ya está implementado.
 - Refinar Vista espejo inline: agregar indicador de cambios sin guardar.
 - Ocultar o mover a modo avanzado los datos técnicos como `slug`, ids internos y JSON.
@@ -185,6 +186,20 @@ Estado 2026-07-28:
 - Separar publicación versionada: activar `Guardar sin publicar` y mantener `Publicar cambios en mi sitio` como acción distinta. Hoy el botón se muestra bloqueado para no prometer borradores inexistentes.
 - Agregar al provisioning una UI de negocio nuevo: nombre, slug, plantilla, usuario admin y URL de landing generada. Hoy existe script base, falta experiencia de un clic.
 - Ejecutar plan de entregables Hostlyc en `coordinacion/plan-trabajo-hostlyc-cms.md`; siguiente prioridad: provisioning de negocio nuevo en un clic y acciones avanzadas de Media/botones.
+
+## Actualizacion Hostlyc 2026-07-28
+
+- El producto padre se hidrata desde contenido publicado versionado en Neon.
+- CMS separa `Borrador` y `Publicar` con control de version obsoleta.
+- Personalizacion por seccion: fondo, texto, fuente, tamanos, pesos, alineacion,
+  orden por drag/drop y botones, y negritas seguras.
+- Tiendas dinamicas: imagenes HTTPS, productos, pago informativo y formulario
+  de contacto persistente.
+- Dos tiendas reales comparten plantilla y conservan hidrataciones aisladas.
+- Migracion `007` aplicada sin exponer la URL de Neon.
+- Stripe, Redis y storage binario permanecen desacoplados y pendientes de
+  adaptador real.
+- Reporte: `entregables/sprint-2/reporte-personalizacion-cms-tiendas-2026-07-28.md`.
 
 ## Bloqueos técnicos antes de integración real
 
