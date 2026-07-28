@@ -40,6 +40,10 @@ Viewports: `390x844`, `768x1024`, `1440x900`.
 - En escritorio se corrigieron inputs que excedian el panel derecho; la
   medicion final fue `scrollWidth=innerWidth` y cero elementos fuera del
   viewport.
+- La descripcion concatenada detectada por tester se corrigio en `pages` y
+  `sitePages`; una sesion nueva confirmo el texto final una sola vez.
+- El sistema hibrido corrigio su doble padding movil; 390 y 768 px terminaron
+  con `scrollWidth` igual al viewport.
 
 Evidencia:
 
@@ -54,6 +58,7 @@ Evidencia:
 - Se revisaron 25 campos sensibles de auditoria: cero sin redaccion.
 - API Back: 31 suites, 98 pruebas y 175 archivos TypeScript bajo 300 lineas.
 - CMS: lint y build aprobados.
+- Sistema hibrido: typecheck, build Vite y responsive aprobados.
 
 ## Pendiente
 
