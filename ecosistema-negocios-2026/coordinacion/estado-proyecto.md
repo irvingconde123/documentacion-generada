@@ -73,6 +73,23 @@ Estado 2026-07-28:
 - Evidencia:
   `coordinacion/reportes-tester/e2e-cms-hostlyc-hidratacion-2026-07-28.md`.
 
+### Editor CMS Del Front Padre
+
+Estado 2026-07-28:
+
+- Corregido: `Mi sitio` reconoce el tipo inmutable `hostlyc-parent` y deja de
+  usar el preview genérico de landings para el tenant canónico.
+- Implementado: edición completa de aviso, hero, confianza, servicios, pasos,
+  planes, FAQ y CTA final con validación de payload.
+- Implementado: preview del front real `4400` dentro del CMS y recarga después
+  de publicar.
+- Corregido: la raíz del front padre es dinámica y recibe cambios CMS en la
+  siguiente solicitud, sin build ni redespliegue.
+- Validado: publicación reversible CMS -> VPC -> front, responsive 390x844 y
+  1440x900, sin overflow ni errores de consola.
+- Evidencia:
+  `coordinacion/reportes-tester/cms-editor-front-padre-real-2026-07-28.md`.
+
 ## Agentes activos
 
 | Agente | Proyecto | Estado | Meta inmediata |
