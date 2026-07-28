@@ -201,6 +201,16 @@ Estado 2026-07-28:
   adaptador real.
 - Reporte: `entregables/sprint-2/reporte-personalizacion-cms-tiendas-2026-07-28.md`.
 
+Actualizacion posterior:
+
+- Borradores de tienda centralizados con concurrencia optimista.
+- Historial inmutable y restauracion disponible desde CMS.
+- Publicacion atomica de documento CMS y renderer publico.
+- Biblioteca Media integrada al editor para imagenes HTTPS activas.
+- Ordenamiento mobile por posicion y drag desktop limitado al asa.
+- Taller Verde finaliza en CMS version 6 y rendering version 7.
+- Stripe, Redis, storage binario y correo de contactos siguen sin conectarse.
+
 ## Bloqueos técnicos antes de integración real
 
 - Auditoría visual autenticada del CMS debe repetirse cuando el dev server de `localhost:3001` responda estable en navegador; build/lint ya pasan.

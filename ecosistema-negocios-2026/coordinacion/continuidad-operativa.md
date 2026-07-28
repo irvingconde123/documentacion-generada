@@ -252,11 +252,18 @@ Para retomar, leer primero:
 
 Siguiente lote:
 
-1. Draft central e historial visible para tiendas.
-2. Storage binario y selector Media.
-3. Adaptador Stripe y webhooks.
-4. Notificacion de contactos por correo.
-5. Redis productivo cuando exista infraestructura.
+1. Storage binario para completar el selector Media ya integrado.
+2. Adaptador Stripe y webhooks.
+3. Notificacion de contactos por correo.
+4. Redis productivo cuando exista infraestructura.
+5. ETag y cache de rendering.
+
+Completado despues de la lista original:
+
+- draft central e historial visible para tiendas;
+- restauracion inmutable como borrador nuevo;
+- publicacion atomica CMS/rendering;
+- ordenamiento tactil y selector de imagenes publicas.
 
 ## Evidencia reciente
 

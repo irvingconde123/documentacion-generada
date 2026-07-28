@@ -128,3 +128,19 @@ Los logs no contienen la connection string.
 - Capturas y reporte responsive:
   `test-results/cms-personalization/` y
   `coordinacion/reportes-tester/personalizacion-cms-tiendas-2026-07-28.md`.
+
+## Versionado De Tiendas 2026-07-28
+
+- Documento central: `store-site`.
+- Escritura obsoleta: `409`.
+- Historial inmutable y restauracion a borrador nuevo.
+- Publicacion CMS/rendering atomica en Data Access.
+- Taller Verde final: CMS version 6, rendering version 7.
+- Browser mobile `320x700`: `320/320`, 1071 px de alto y sin overlay.
+- Data Access: 119 pruebas.
+- API Back: 105 pruebas.
+- VPC: 45 unitarias y 9 E2E.
+- Reporte:
+  `coordinacion/entregables/sprint-2/reporte-versionado-tiendas-adaptadores-2026-07-28.md`.
+- Tester:
+  `coordinacion/reportes-tester/versionado-tiendas-cms-2026-07-28.md`.

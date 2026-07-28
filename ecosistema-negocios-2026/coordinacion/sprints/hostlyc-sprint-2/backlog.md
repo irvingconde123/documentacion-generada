@@ -43,8 +43,10 @@
 | S2-039 | Personalizar estilos y orden por seccion desde CMS | Front/CMS | completado |
 | S2-040 | Configurar imagenes, pago informativo y contacto por tienda | Fullstack | completado sin Stripe |
 | S2-041 | Persistir solicitudes de contacto por tenant | Back/Data | completado |
-| S2-042 | Agregar draft central versionado para tiendas | Back/Data/CMS | pendiente |
-| S2-043 | Conectar storage binario al selector de imagenes | CMS/Storage | pendiente |
+| S2-042 | Agregar draft central versionado para tiendas | Back/Data/CMS | completado |
+| S2-043 | Conectar storage binario al selector de imagenes | CMS/Storage | selector local completado; storage externo pendiente |
+| S2-044 | Historial y restauracion inmutable de tiendas | Back/Data/CMS | completado |
+| S2-045 | Adaptadores externos de pagos, correo, media y Redis | Integrador | contratos delimitados; servicios externos pendientes |
 
 ## Lotes
 
