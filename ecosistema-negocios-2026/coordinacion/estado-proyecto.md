@@ -62,10 +62,14 @@ Estado 2026-07-28:
   negocio canónico Hostlyc con membresia `owner`.
 - Corregido: el CMS aprovisiona workspaces por `tenantSlug` y no mezcla el
   contenido demo de otro tenant.
-- Implementado: `hostlyc-parent-web -> VPC -> API Back -> CMS` para contenido
-  estructurado, sin HTML ejecutable.
+- Implementado: `hostlyc-parent-web -> VPC -> API Back -> CMS` para
+  `HomeContent` estructurado, sin HTML ejecutable.
 - Validado: cambio editorial visible en `4400` sin redespliegue y fallback
   local al detener CMS.
+- Calidad CMS: lint, build y 77 archivos TypeScript dentro del limite de 300
+  lineas; commit `7d8fcf0` publicado en `hostlyc_reestructuracion`.
+- Responsive: editor y front aprobados en 390x844, 768x1024 y 1440x900; cero
+  elementos fuera del viewport en la medicion final.
 - Evidencia:
   `coordinacion/reportes-tester/e2e-cms-hostlyc-hidratacion-2026-07-28.md`.
 
